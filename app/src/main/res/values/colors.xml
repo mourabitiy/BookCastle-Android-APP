@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#36538D</color>
+    <color name="purple_500">#1D2355</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="colorPrimary">#36538D</color>
+    <color name="colorPrimaryDark">#171B36</color>
+    <color name="colorAccent">#36538D</color>
+    <color name="df_transparent_black_background">#80000000</color>
+    <color name="whiteCardColor">#E5E5E5</color>
+    <color name="whiteTextColor">#EEEFF1</color>
+    <color name="blackTextColor">#000</color>
+    <color name = "green">#09E8B2</color>
+    <color name = "yellow">#F6C85D</color>
+    <color name="breaker">#DE7773</color>
+    <color name ="bg_dark">#292731</color>
+
+</resources>

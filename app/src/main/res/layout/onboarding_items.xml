@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_dark">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingTop="20dp"
+        android:background="@color/white">
+    <ImageView
+        android:id="@+id/onboarding_image"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/logo_b"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp" />
+<TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:text="@string/app_name"
+    android:fontFamily="@font/gotham_bold"
+        />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:paddingBottom="30dp"
+        android:background="@drawable/rounded_corner"
+        >
+
+        <ImageView
+            android:id="@+id/onboarding_iv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:src="@drawable/frame1"
+            android:paddingBottom="50dp"
+
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+      >
+        <TextView
+            android:id="@+id/onboarding_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="15sp"
+            android:textColor="@color/breaker"
+            android:fontFamily="@font/karla"
+            android:layout_marginTop="30dp"
+            android:textFontWeight="900"
+            />
+        <TextView
+            android:id="@+id/onboarding_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="30dp"
+            android:textColor="@color/white"
+            android:textAlignment="center"
+            android:paddingTop="10dp"
+            android:fontFamily="@font/newsreader"
+            android:layout_marginTop="30dp"
+            />
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>
+

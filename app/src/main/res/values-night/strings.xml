@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="no_internet_txt">Il semble que vous n\'êtes pas connecté à Internet ou que le service n\'est pas disponible.  Vérifiez votre connexion et réessayez. Si cette erreur se reproduit, veuillez signaler le problème à notre équipe.</string>
+</resources>

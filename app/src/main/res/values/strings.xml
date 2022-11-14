@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">BookCastle</string>
+    <string name="slogan">Because reading is awesome!</string>
+    <string name="try_again">Réssayer</string>
+    <string name="no_internet_connection">Non connecté</string>
+    <string name="no_internet_txt">Il semble que vous n\'êtes pas connecté à Internet. Vérifiez votre connexion et réessayez.</string>
+    <string name="no_internet_notice">Si cette erreur se reproduit, veuillez signaler le problème à notre équipe.</string>
+    <string name="not_connected">Non connecté</string>
+    <string name="settings"><u>Paramètres</u></string>
+    <string name="new_articles">Nouveautés</string>
+    <string name="popular">Populaire</string>
+    <string name="view_all">Voir tout</string>
+</resources>
