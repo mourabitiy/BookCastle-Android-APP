@@ -4,45 +4,50 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@drawable/gradient_home"
+    android:paddingHorizontal="20dp">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:fontFamily="@font/nexa_bold"
-        android:text="@string/popular"
-        android:textColor="@color/colorAccent"
-        android:textSize="26sp"
-        app:layout_constraintBottom_toBottomOf="@id/guideline2"
-        app:layout_constraintTop_toTopOf="@id/guideline3"
-        app:layout_constraintLeft_toLeftOf="parent"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/nunito_semibold"
-        android:text="@string/view_all"
-        android:textColor="@color/df_transparent_black_background"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@id/guideline2"
-        app:layout_constraintEnd_toEndOf="@id/guideline3"
-       app:layout_constraintLeft_toRightOf="@id/guideline3" />
-
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline2"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_end="598dp" />
+        android:gravity="center_vertical|center_horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.049">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="395dp" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="left"
+            android:layout_weight="1">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hello_user"
+                android:textSize="25dp"
+                android:fontFamily="@font/nexa_bold"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/home_message"
+                android:textSize="15dp"
+                android:fontFamily="@font/nunito_bold"
+                android:textColor="@color/df_transparent_black_background"/>
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_baseline_supervised_user_circle_24"
+            android:gravity="right"
+            android:layout_weight="0.1"/>
+
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

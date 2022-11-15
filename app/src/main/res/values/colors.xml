@@ -19,5 +19,6 @@
     <color name = "yellow">#F6C85D</color>
     <color name="breaker">#DE7773</color>
     <color name ="bg_dark">#292731</color>
+    <color name ="bg_light">#72E8E8B6</color>
 
 </resources>

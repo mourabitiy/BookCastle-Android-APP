@@ -10,4 +10,6 @@
     <string name="new_articles">Nouveautés</string>
     <string name="popular">Populaire</string>
     <string name="view_all">Voir tout</string>
+    <string name="hello_user"><b>Hello</b>, </string>
+    <string name="home_message">Keep Exploring that you\'ll love</string>
 </resources>
