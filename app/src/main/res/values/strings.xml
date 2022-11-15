@@ -12,4 +12,5 @@
     <string name="view_all">Voir tout</string>
     <string name="hello_user"><b>Hello</b>, </string>
     <string name="home_message">Keep Exploring that you\'ll love</string>
+    <string name="search">Find a Book</string>
 </resources>

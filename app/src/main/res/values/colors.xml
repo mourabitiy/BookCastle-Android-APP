@@ -10,7 +10,7 @@
 
     <color name="colorPrimary">#36538D</color>
     <color name="colorPrimaryDark">#171B36</color>
-    <color name="colorAccent">#36538D</color>
+    <color name="colorAccent">#7D8491</color>
     <color name="df_transparent_black_background">#80000000</color>
     <color name="whiteCardColor">#E5E5E5</color>
     <color name="whiteTextColor">#EEEFF1</color>
@@ -20,5 +20,7 @@
     <color name="breaker">#DE7773</color>
     <color name ="bg_dark">#292731</color>
     <color name ="bg_light">#72E8E8B6</color>
+    <color name ="bg_search_light">#FAFAF4</color>
+
 
 </resources>
