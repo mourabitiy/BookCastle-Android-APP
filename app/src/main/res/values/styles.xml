@@ -50,5 +50,9 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="roundedImageView" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
+    </style>
     <!--styles for internet dialog ends here-->
 </resources>

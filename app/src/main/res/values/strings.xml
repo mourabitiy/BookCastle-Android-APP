@@ -8,9 +8,15 @@
     <string name="not_connected">Non connecté</string>
     <string name="settings"><u>Paramètres</u></string>
     <string name="new_articles">Nouveautés</string>
-    <string name="popular">Populaire</string>
+    <string name="popular">Popular</string>
     <string name="view_all">Voir tout</string>
-    <string name="hello_user"><b>Hello</b>, </string>
-    <string name="home_message">Keep Exploring that you\'ll love</string>
-    <string name="search">Find a Book</string>
+    <string name="hello_user">Welcome back, </string>
+    <string name="home_message">What do you want to read today?</string>
+    <string name="search">Search</string>
+    <string name="novel">Novel</string>
+    <string name="education">Education</string>
+    <string name="science">Science</string>
+    <string name="romance">Romance</string>
+    <string name="crime">Crime</string>
+    <string name="psychology">Psychology</string>
 </resources>

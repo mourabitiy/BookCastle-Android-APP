@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:background="@drawable/gradient_home"
-    android:paddingHorizontal="20dp">
+    android:paddingHorizontal="5dp"
+    tools:context=".MainActivity">
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:gravity="center_vertical|center_horizontal"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -31,17 +37,19 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/nexa_bold"
-                android:text="@string/hello_user"
-                android:textSize="25dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:fontFamily="@font/nunito_bold"
-                android:text="@string/home_message"
+                android:text="@string/hello_user"
                 android:textColor="@color/df_transparent_black_background"
                 android:textSize="15dp" />
+
+            <TextView
+                android:layout_width="235dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_sb"
+                android:text="@string/home_message"
+                android:textColor="@color/black"
+                android:textFontWeight="0"
+                android:textSize="22dp" />
         </LinearLayout>
 
         <ImageView
@@ -53,32 +61,114 @@
 
     </LinearLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_marginTop="20dp"
-        android:layout_marginHorizontal="15dp"
-        android:id="@+id/textField"
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/search"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        tools:layout_editor_absoluteX="20dp"
-        app:startIconDrawable="@drawable/ic_search"
-        app:endIconMode="clear_text"
-        app:startIconTint="@color/breaker"
-        android:background="@color/white"
-        app:hintAnimationEnabled="false"
-        app:boxStrokeWidthFocused="0dp"
-        app:boxStrokeColor="@color/text_input_layout_stroke_color"
-        app:boxStrokeWidth="0dp">
+        android:orientation="horizontal"
+        android:weightSum="100"
+        app:layout_constraintTop_toTopOf="@+id/guideline2"
+        tools:layout_editor_absoluteX="20dp">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
+        <EditText
+            android:id="@+id/search"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@color/bg_search_light"
-            app:hintAnimationEnabled="false"/>
+            android:layout_weight="100"
+            android:background="@drawable/gray_rounded_shape"
+            android:drawableLeft="@drawable/ic_search_gray_24dp"
+            android:drawableRight="@drawable/icon_mic"
+            android:drawablePadding="8dp"
+            android:fontFamily="@font/nexa_regular"
+            android:hint="@string/search"
+            android:padding="11dp"
+            android:layout_marginHorizontal="10dp"
+            android:textColorHint="#9ea1b0"
+            tools:ignore="TouchTargetSizeCheck" />
+    </LinearLayout>
 
-    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/transparent"
+        android:clipToPadding="false"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline3"
+        app:tabBackground="@drawable/tab_color_selector"
+        app:tabIndicatorColor="@color/breaker"
+        app:tabGravity="fill"
+        app:tabMinWidth="50dp"
+        app:tabMode="scrollable"
+        app:tabSelectedTextColor="#000000"
+        app:tabTextColor="#9ea1b0">
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/popular" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/gray_rounded_shape"
+            android:text="@string/education" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/science" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/gray_rounded_shape"
+            android:text="@string/psychology" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/romance" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/crime" />
+
+    </com.google.android.material.tabs.TabLayout>
 
 
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/parent_rv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tabLayout"
+        app:layout_constraintVertical_bias="0.049"
+        tools:layout_editor_absoluteX="24dp">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="226dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="153dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

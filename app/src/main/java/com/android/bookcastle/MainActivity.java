@@ -1,93 +1,80 @@
 package com.android.bookcastle;
 
 import androidx.appcompat.app.AppCompatActivity;
-
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.EditText;
 
-import com.android.bookcastle.utils.NetworkChangeListener;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
-import com.bumptech.glide.Glide;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.android.bookcastle.adapters.CategoryAdapter;
+import com.android.bookcastle.model.Book;
+import com.android.bookcastle.model.Category;
+import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity {
-    NetworkChangeListener networkChangeListener = new NetworkChangeListener();
-    ImageView mDogImageView;
-    Button nextDogButton;
+    RecyclerView recyclerView;
+    CategoryAdapter categoryAdapter;
+    ArrayList<Category> categories;
+    ArrayList<Book> books;
+    ArrayList <Book>  PopularBooks;
+    ArrayList <Book>  NewBooks;
+    ArrayList <Book>  TopBooks;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        mDogImageView = findViewById(R.id.dogImageView);
-//        nextDogButton = findViewById(R.id.nextDogButton);
+        recyclerView = findViewById(R.id.parent_rv);
+        categories = new ArrayList<Category>();
+        books = new ArrayList<Book>();
+        PopularBooks = new ArrayList<Book>();
+        NewBooks = new ArrayList<Book>();
+        TopBooks = new ArrayList<Book>();
 
-       // nextDogButton.setOnClickListener(View -> loadDogImage());
 
-        // image of a dog will be loaded once at the start of the app
-        //loadDogImage();
+        //Popular Books
+        PopularBooks.add(new Book("The Alchemist", "Paulo Coelho", "https://m.media-amazon.com/images/P/0008283648.01._SCLZZZZZZZ_SX500_.jpg"));
+        PopularBooks.add(new Book("The Power of Now", "Eckhart Tolle", "https://m.media-amazon.com/images/I/41gr3r3FSWL.jpg"));
+        PopularBooks.add(new Book("The Alchemist", "Paulo Coelho", "https://images-na.ssl-images-amazon.com/images/I/51Zt3ZQ3ZzL._SX331_BO1,204,203,200_.jpg"));
+        PopularBooks.add(new Book("The Power of Now", "Eckhart Tolle", "https://images-na.ssl-images-amazon.com/images/I/51Zt3ZQ3ZzL._SX331_BO1,204,203,200_.jpg"));
+
+        //New Books
+        NewBooks.add(new Book("The Alchemist", "Paulo Coelho", "https://images-na.ssl-images-amazon.com/images/I/51Zt3ZQ3ZzL._SX331_BO1,204,203,200_.jpg"));
+        NewBooks.add(new Book("The Power of Now", "Eckhart Tolle", "https://images-na.ssl-images-amazon.com/images/I/51Zt3ZQ3ZzL._SX331_BO1,204,203,200_.jpg"));
+        NewBooks.add(new Book("The Alchemist", "Paulo Coelho", "https://images-na.ssl-images-amazon.com/images/I/51Zt3ZQ3ZzL._SX331_BO1,204,203,200_.jpg"));
+        NewBooks.add(new Book("The Power of Now", "Eckhart Tolle", "https://images-na.ssl-images-amazon.com/images/I/51Zt3ZQ3ZzL._SX331_BO1,204,203,200_.jpg"));
+
+        //Top Books
+        TopBooks.add(new Book("The Alchemist", "Paulo Coelho", "https://images-na.ssl-images-amazon.com/images/I/51Zt3ZQ3ZzL._SX331_BO1,204,203,200_.jpg"));
+        TopBooks.add(new Book("The Power of Now", "Eckhart Tolle", "https://images-na.ssl-images-amazon.com/images/I/51Zt3ZQ3ZzL._SX331_BO1,204,203,200_.jpg"));
+        TopBooks.add(new Book("The Alchemist", "Paulo Coelho", "https://images-na.ssl-images-amazon.com/images/I/51Zt3ZQ3ZzL._SX331_BO1,204,203,200_.jpg"));
+        TopBooks.add(new Book("The Power of Now", "Eckhart Tolle", "https://images-na.ssl-images-amazon.com/images/I/51Zt3ZQ3ZzL._SX331_BO1,204,203,200_.jpg"));
+
+        //Books
+        books.add(new Book("The Alchemist", "Paulo Coelho", "https://images-na.ssl-images-amazon.com/images/I/51Zt3ZQ3ZzL._SX331_BO1,204,203,200_.jpg"));
+        books.add(new Book("The Power of Now", "Eckhart Tolle", "https://images-na.ssl-images-amazon.com/images/I/51Zt3ZQ3ZzL._SX331_BO1,204,203,200_.jpg"));
+        books.add(new Book("The Alchemist", "Paulo Coelho", "https://images-na.ssl-images-amazon.com/images/I/51Zt3ZQ3ZzL._SX331_BO1,204,203,200_.jpg"));
+        books.add(new Book("The Power of Now", "Eckhart Tolle", "https://images-na.ssl-images-amazon.com/images/I/51Zt3ZQ3ZzL._SX331_BO1,204,203,200_.jpg"));
+
+        //Categories
+        categories.add(new Category("Popular", PopularBooks));
+        categories.add(new Category("New", NewBooks));
+        categories.add(new Category("Top", TopBooks));
+        categories.add(new Category("Books", books));
+
+        //Set Adapter
+        categoryAdapter = new CategoryAdapter(categories, this);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(categoryAdapter);
+        categoryAdapter.notifyDataSetChanged();
+
+
+
     }
 
-//    private void loadDogImage() {
-//
-//        // getting a new volley request queue for making new requests
-//        RequestQueue volleyQueue = Volley.newRequestQueue(MainActivity.this);
-//        // url of the api through which we get random dog images
-//        String url = "https://dog.ceo/api/breeds/image/random";
-//
-//        // since the response we get from the api is in JSON, we
-//        // need to use `JsonObjectRequest` for parsing the
-//        // request response
-//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-//                // we are using GET HTTP request method
-//                Request.Method.GET,
-//                // url we want to send the HTTP request to
-//                url,
-//                // this parameter is used to send a JSON object to the
-//                // server, since this is not required in our case,
-//                // we are keeping it `null`
-//                null,
-//
-//                // lambda function for handling the case
-//                // when the HTTP request succeeds
-//                (Response.Listener<JSONObject>) response -> {
-//                    // get the image url from the JSON object
-//                    String dogImageUrl;
-//                    try {
-//                        dogImageUrl = response.getString("message");
-//                        // load the image into the ImageView using Glide.
-//                        Glide.with(MainActivity.this).load(dogImageUrl).into(mDogImageView);
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-//                },
-//
-//                // lambda function for handling the case
-//                // when the HTTP request fails
-//                (Response.ErrorListener) error -> {
-//                    // make a Toast telling the user
-//                    // that something went wrong
-//                    Toast.makeText(MainActivity.this, "Some error occurred! Cannot fetch dog image", Toast.LENGTH_LONG).show();
-//                    // log the error message in the error stream
-//                    Log.e("MainActivity", "loadDogImage error: ${error.localizedMessage}");
-//                }
-//        );
-//
-//        // add the json request object created above
-//        // to the Volley request queue
-//        volleyQueue.add(jsonObjectRequest);
-//    }
 
 
 }
