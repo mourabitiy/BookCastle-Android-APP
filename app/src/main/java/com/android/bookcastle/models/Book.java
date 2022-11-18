@@ -1,4 +1,4 @@
-package com.android.bookcastle.model;
+package com.android.bookcastle.models;
 
 public class Book {
     private String name;

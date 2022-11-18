@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.bookcastle.R;
-import com.android.bookcastle.model.Book;
-import com.android.bookcastle.model.Category;
+import com.android.bookcastle.models.Book;
+import com.android.bookcastle.models.Category;
 
 import java.util.ArrayList;
 import java.util.List;

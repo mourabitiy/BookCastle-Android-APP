@@ -4,11 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
-import android.widget.EditText;
 
 import com.android.bookcastle.adapters.CategoryAdapter;
-import com.android.bookcastle.model.Book;
-import com.android.bookcastle.model.Category;
+import com.android.bookcastle.models.Book;
+import com.android.bookcastle.models.Category;
 import java.util.ArrayList;
 
 
@@ -33,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         PopularBooks = new ArrayList<Book>();
         NewBooks = new ArrayList<Book>();
         TopBooks = new ArrayList<Book>();
+
 
 
         //Popular Books

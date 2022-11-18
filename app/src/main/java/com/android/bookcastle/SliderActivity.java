@@ -46,7 +46,7 @@ public class SliderActivity extends AppCompatActivity {
             if(onBoardingViewPager.getCurrentItem() + 1 < onBoardingAdapter.getItemCount()){
                 onBoardingViewPager.setCurrentItem(onBoardingViewPager.getCurrentItem() + 1);
             }else{
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                 finish();
             }
         });

@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.bookcastle.R;
-import com.android.bookcastle.model.Book;
+import com.android.bookcastle.models.Book;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
