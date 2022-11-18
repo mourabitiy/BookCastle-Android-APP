@@ -11,18 +11,17 @@
                 android:id="@+id/categorie_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
+                android:paddingHorizontal="18dp"
+                android:textSize="25dp"
+                android:fontFamily="@font/poppins_sb"
                 android:textColor="@color/black"
                 android:text="Popular"/>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/child_rv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
                >
-
             </androidx.recyclerview.widget.RecyclerView>
-
 
         </LinearLayout>
 
