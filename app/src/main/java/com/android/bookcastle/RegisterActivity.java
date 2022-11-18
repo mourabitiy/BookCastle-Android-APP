@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.android.bookcastle.models.User;
 import com.android.bookcastle.utils.UserDatabaseHelper;
+import com.google.android.material.snackbar.Snackbar;
 
 public class RegisterActivity extends AppCompatActivity {
     EditText username,password,repassword;
@@ -28,12 +29,14 @@ public class RegisterActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.btnLogin);
         btnRegister = findViewById(R.id.btnRegister);
         DB = UserDatabaseHelper.getInstance(this);
+        User user1 = new User();
 
         btnRegister.setOnClickListener(v -> {
                 String user = username.getText().toString();
                 String pass = password.getText().toString();
                 String repass = repassword.getText().toString();
-                User user1 = new User(user,pass);
+                user1.setUsername(user);
+                user1.setPassword(pass);
 
                 if(user.equals("") || pass.equals("") || repass.equals("")){
                     Toast.makeText(RegisterActivity.this, "Please enter all the fields ! ", Toast.LENGTH_SHORT).show();
@@ -43,21 +46,45 @@ public class RegisterActivity extends AppCompatActivity {
                         if(checkUser == false){
                             Boolean insert = DB.addUser(user1);
                             if(insert == true){
-                                Toast.makeText(RegisterActivity.this, "Registed successfully", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
                                 startActivity(intent);
                             }else{
-                                Toast.makeText(RegisterActivity.this, "Registration failed", Toast.LENGTH_SHORT).show();
-
+                                Snackbar.make(v, "Failed to register, please try later again", Snackbar.LENGTH_LONG)
+                                        //add retry button
+                                        .setAction("Retry", new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                btnRegister.performClick();
+                                            }
+                                        })
+                                        .show();
                             }
                         }else{
-                            Toast.makeText(RegisterActivity.this, "User already exists please sign in", Toast.LENGTH_SHORT).show();
+                            Snackbar.make(v, "User already exists! please sign in", Snackbar.LENGTH_LONG)
+                                    //add retry button
+                                    .setAction("Login", new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+                                        }
+                                    })
+                                    .show();
                         }
                     }else{
-                        Toast.makeText(RegisterActivity.this, "Password not matching", Toast.LENGTH_SHORT).show();
+                            Snackbar.make(v, "Password not matching", Snackbar.LENGTH_LONG)
+                                    //add retry button
+                                    .setAction("Retry", new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            btnRegister.performClick();
+                                        }
+                                    })
+                                    .show();
                     }
                 }
         });
+
+
 
   btnLogin.setOnClickListener(v -> {
                 Intent intent = new Intent(getApplicationContext(),LoginActivity.class);

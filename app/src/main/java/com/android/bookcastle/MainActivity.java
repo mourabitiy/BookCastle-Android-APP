@@ -3,7 +3,10 @@ package com.android.bookcastle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import com.android.bookcastle.adapters.CategoryAdapter;
 import com.android.bookcastle.models.Book;
@@ -20,11 +23,18 @@ public class MainActivity extends AppCompatActivity {
     ArrayList <Book>  NewBooks;
     ArrayList <Book>  TopBooks;
 
+    TextView welcome_msg;
+    String username;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //get shared preferences
+        SharedPreferences sharedPreferences = getSharedPreferences("login", MODE_PRIVATE);
+        this.username = sharedPreferences.getString("username", "");
 
         recyclerView = findViewById(R.id.parent_rv);
         categories = new ArrayList<Category>();
@@ -70,11 +80,12 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(categoryAdapter);
         categoryAdapter.notifyDataSetChanged();
-
-
-
     }
 
-
-
+    @Override
+    protected void onStart() {
+        super.onStart();
+        welcome_msg = findViewById(R.id.welcome_msg);
+        welcome_msg.setText("Welcome back, " + username);
+    }
 }
