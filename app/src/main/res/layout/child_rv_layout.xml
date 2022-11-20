@@ -12,7 +12,7 @@
         android:orientation="vertical">
     <androidx.cardview.widget.CardView
         android:layout_width="200dp"
-        android:layout_height="320dp"
+        android:layout_height="370dp"
         app:cardCornerRadius="4dp"
         app:cardElevation="4dp"
         app:contentPadding="10dp">

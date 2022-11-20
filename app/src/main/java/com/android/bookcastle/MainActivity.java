@@ -1,5 +1,6 @@
 package com.android.bookcastle;
 
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -7,79 +8,102 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.bookcastle.adapters.CategoryAdapter;
+import com.android.bookcastle.api.RetrofitClient;
 import com.android.bookcastle.models.Book;
 import com.android.bookcastle.models.Category;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.android.material.snackbar.Snackbar;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.AbstractCollection;
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
 
 
 public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     CategoryAdapter categoryAdapter;
     ArrayList<Category> categories;
-    ArrayList<Book> books;
     ArrayList <Book>  PopularBooks;
-    ArrayList <Book>  NewBooks;
-    ArrayList <Book>  TopBooks;
 
-    TextView welcome_msg;
+    RequestQueue requestQueue;
+
+    TextView welcome_msg, test_response;
     String username;
+
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        //get shared preferences
         SharedPreferences sharedPreferences = getSharedPreferences("login", MODE_PRIVATE);
         this.username = sharedPreferences.getString("username", "");
-
         recyclerView = findViewById(R.id.parent_rv);
-        categories = new ArrayList<Category>();
-        books = new ArrayList<Book>();
-        PopularBooks = new ArrayList<Book>();
-        NewBooks = new ArrayList<Book>();
-        TopBooks = new ArrayList<Book>();
-
-
-
-        //Popular Books
-        PopularBooks.add(new Book("The Alchemist", "Paulo Coelho", "https://m.media-amazon.com/images/P/0008283648.01._SCLZZZZZZZ_SX500_.jpg"));
-        PopularBooks.add(new Book("The Power of Now", "Eckhart Tolle", "https://m.media-amazon.com/images/I/41gr3r3FSWL.jpg"));
-        PopularBooks.add(new Book("The Alchemist", "Paulo Coelho", "https://images-na.ssl-images-amazon.com/images/I/51Zt3ZQ3ZzL._SX331_BO1,204,203,200_.jpg"));
-        PopularBooks.add(new Book("The Power of Now", "Eckhart Tolle", "https://images-na.ssl-images-amazon.com/images/I/51Zt3ZQ3ZzL._SX331_BO1,204,203,200_.jpg"));
-
-        //New Books
-        NewBooks.add(new Book("The Alchemist", "Paulo Coelho", "https://images-na.ssl-images-amazon.com/images/I/51Zt3ZQ3ZzL._SX331_BO1,204,203,200_.jpg"));
-        NewBooks.add(new Book("The Power of Now", "Eckhart Tolle", "https://images-na.ssl-images-amazon.com/images/I/51Zt3ZQ3ZzL._SX331_BO1,204,203,200_.jpg"));
-        NewBooks.add(new Book("The Alchemist", "Paulo Coelho", "https://images-na.ssl-images-amazon.com/images/I/51Zt3ZQ3ZzL._SX331_BO1,204,203,200_.jpg"));
-        NewBooks.add(new Book("The Power of Now", "Eckhart Tolle", "https://images-na.ssl-images-amazon.com/images/I/51Zt3ZQ3ZzL._SX331_BO1,204,203,200_.jpg"));
-
-        //Top Books
-        TopBooks.add(new Book("The Alchemist", "Paulo Coelho", "https://images-na.ssl-images-amazon.com/images/I/51Zt3ZQ3ZzL._SX331_BO1,204,203,200_.jpg"));
-        TopBooks.add(new Book("The Power of Now", "Eckhart Tolle", "https://images-na.ssl-images-amazon.com/images/I/51Zt3ZQ3ZzL._SX331_BO1,204,203,200_.jpg"));
-        TopBooks.add(new Book("The Alchemist", "Paulo Coelho", "https://images-na.ssl-images-amazon.com/images/I/51Zt3ZQ3ZzL._SX331_BO1,204,203,200_.jpg"));
-        TopBooks.add(new Book("The Power of Now", "Eckhart Tolle", "https://images-na.ssl-images-amazon.com/images/I/51Zt3ZQ3ZzL._SX331_BO1,204,203,200_.jpg"));
-
-        //Books
-        books.add(new Book("The Alchemist", "Paulo Coelho", "https://images-na.ssl-images-amazon.com/images/I/51Zt3ZQ3ZzL._SX331_BO1,204,203,200_.jpg"));
-        books.add(new Book("The Power of Now", "Eckhart Tolle", "https://images-na.ssl-images-amazon.com/images/I/51Zt3ZQ3ZzL._SX331_BO1,204,203,200_.jpg"));
-        books.add(new Book("The Alchemist", "Paulo Coelho", "https://images-na.ssl-images-amazon.com/images/I/51Zt3ZQ3ZzL._SX331_BO1,204,203,200_.jpg"));
-        books.add(new Book("The Power of Now", "Eckhart Tolle", "https://images-na.ssl-images-amazon.com/images/I/51Zt3ZQ3ZzL._SX331_BO1,204,203,200_.jpg"));
-
-        //Categories
-        categories.add(new Category("Popular", PopularBooks));
-        categories.add(new Category("New", NewBooks));
-        categories.add(new Category("Top", TopBooks));
-        categories.add(new Category("Books", books));
-
-        //Set Adapter
-        categoryAdapter = new CategoryAdapter(categories, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(categoryAdapter);
-        categoryAdapter.notifyDataSetChanged();
+
+        categories = new ArrayList<Category>();
+        PopularBooks = new ArrayList<Book>();
+
+        requestQueue = Volley.newRequestQueue(this);
+        parseJson();
+
+
+
+
+        //adapter
+
+
+    }
+
+    private void parseJson() {
+        String url = "https://www.googleapis.com/books/v1/volumes?q=subject:fiction";
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url,
+                null, response -> {
+            try {
+                JSONArray jsonArray = response.getJSONArray("items");
+                //display size of json array using toast
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject book = jsonArray.getJSONObject(i);
+                    JSONObject volumeInfo = book.getJSONObject("volumeInfo");
+                    String title = volumeInfo.getString("title");
+                    String image = volumeInfo.getJSONObject("imageLinks").getString("smallThumbnail");
+                    //author is an array
+                    JSONArray authors = volumeInfo.getJSONArray("authors");
+                    String author = authors.getString(0);
+                    Book book1 = new Book(title, author, image);
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            finally {
+                categories.add(new Category("Popular", PopularBooks));
+                categoryAdapter = new CategoryAdapter(categories, MainActivity.this);
+                recyclerView.setAdapter(categoryAdapter);
+                categoryAdapter.notifyDataSetChanged();
+            }
+        }, error -> {
+            Snackbar.make(recyclerView, "Error fetching data", Snackbar.LENGTH_SHORT).show();
+                });
+
+        requestQueue.add(request);
     }
 
     @Override
@@ -88,4 +112,7 @@ public class MainActivity extends AppCompatActivity {
         welcome_msg = findViewById(R.id.welcome_msg);
         welcome_msg.setText("Welcome back, " + username);
     }
+
+
+    
 }

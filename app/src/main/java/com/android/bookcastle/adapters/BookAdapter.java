@@ -1,6 +1,8 @@
 package com.android.bookcastle.adapters;
 
+
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.bookcastle.R;
 import com.android.bookcastle.models.Book;
 import com.bumptech.glide.Glide;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -36,18 +39,19 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
     @Override
     public void onBindViewHolder(@NonNull BookViewHolder holder, int position) {
         Book book = books.get(position);
-        holder.bookName.setText(book.getName());
+        holder.bookName.setText(book.getTitle().length()>=20?
+                book.getTitle().substring(0,20) + "...":book.getTitle());
         holder.bookAuthor.setText(book.getAuthor());
         Glide.with(context)
                 .load(book.getImage())
-                .onlyRetrieveFromCache(true)
-                .placeholder(R.drawable.book_placeholder)
+              .centerCrop()
                 .into(holder.bookImage);
+
         //on click listener for each book
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "Clicked on " + book.getName(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Clicked on " + book.getTitle(), Toast.LENGTH_SHORT).show();
             }
         });
     }
