@@ -78,7 +78,7 @@
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:background="@android:color/darker_gray"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="12dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         />
@@ -122,7 +122,7 @@
         android:background="#4058A4"
         android:paddingRight="8dp"
         android:paddingLeft="8dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="26dp"
         />
     <LinearLayout
         android:layout_width="match_parent"
@@ -148,6 +148,14 @@
             android:layout_marginLeft="270dp"
             />
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@android:color/darker_gray"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -175,6 +183,14 @@
 
 
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@android:color/darker_gray"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -206,7 +222,7 @@
         android:background="#4058A4"
         android:paddingRight="8dp"
         android:paddingLeft="8dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="26dp"
         />
 
 
@@ -215,7 +231,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="70dp"
         android:layout_marginLeft="90dp"
         android:orientation="vertical">
 
