@@ -1,8 +1,9 @@
 package com.android.bookcastle.models;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Category {
+public class Category implements Serializable {
     private String title;
     List<Book> books;
 

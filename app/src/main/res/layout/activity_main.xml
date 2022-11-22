@@ -20,6 +20,39 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+
+        <!--below is the view for our shimmer-->
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmerLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"
+            android:animationCache="true"
+            app:shimmer_repeat_mode="restart"
+            app:shimmer_shape="linear"
+            app:shimmer_duration="3000">
+
+            <!--For shimmer we are creating a same
+                layout but setting its background
+                as a gray colour and not providing
+                any view inside it-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <!--below we are displaying multiple
+                    shimmer layouts using include
+                    to show them in list format-->
+                <include layout="@layout/shimmer_layout" />
+                <include layout="@layout/shimmer_layout" />
+                <include layout="@layout/shimmer_layout" />
+                <include layout="@layout/shimmer_layout" />
+                <include layout="@layout/shimmer_layout" />
+
+            </LinearLayout>
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
     </FrameLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

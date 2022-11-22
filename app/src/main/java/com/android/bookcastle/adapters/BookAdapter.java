@@ -16,13 +16,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.bookcastle.R;
 import com.android.bookcastle.models.Book;
 import com.bumptech.glide.Glide;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder> {
     private ArrayList<Book> books;
     private Context context;
+    private OnBookClickListener mOnBookListener;
+
+    public interface OnBookClickListener {
+        void onBookClick(int position);
+    }
+
+    public void setOnBookClickListener(OnBookClickListener onBookClickListener) {
+        mOnBookListener = onBookClickListener;
+    }
 
     public BookAdapter(ArrayList<Book> books, Context context) {
         this.books = books;
@@ -47,13 +55,13 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
               .centerCrop()
                 .into(holder.bookImage);
 
-        //on click listener for each book
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context, "Clicked on " + book.getTitle(), Toast.LENGTH_SHORT).show();
-            }
-        });
+//        //on click listener for each book
+//        holder.itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(context, "Clicked on " + book.getTitle(), Toast.LENGTH_SHORT).show();
+//            }
+//        });
     }
 
     @Override

@@ -2,20 +2,22 @@ package com.android.bookcastle;
 
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import android.content.SharedPreferences;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.MenuItem;
-import android.widget.TextView;
+import android.os.StrictMode;
+import android.view.View;
 import android.widget.Toast;
 
-import com.android.bookcastle.adapters.CategoryAdapter;
-import com.android.bookcastle.api.RetrofitClient;
+import com.android.bookcastle.api.ApiClient;
 import com.android.bookcastle.databinding.ActivityMainBinding;
 import com.android.bookcastle.fragments.BookmarkFragment;
 import com.android.bookcastle.fragments.ExploreFragment;
@@ -23,30 +25,25 @@ import com.android.bookcastle.fragments.HomeFragment;
 import com.android.bookcastle.fragments.SettingsFragment;
 import com.android.bookcastle.models.Book;
 import com.android.bookcastle.models.Category;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
-import com.google.android.material.snackbar.Snackbar;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.android.bookcastle.utils.Common;
+import com.android.bookcastle.utils.ECategories;
+import com.android.bookcastle.utils.NetworkChangeListener;
+import com.facebook.shimmer.ShimmerFrameLayout;
 
 import java.io.IOException;
-import java.util.AbstractCollection;
 import java.util.ArrayList;
-import java.util.List;
-
-import retrofit2.Call;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
     ArrayList<Category> categories;
+    ArrayList<Book> books;
+    ApiClient apiClient;
+    NetworkChangeListener networkChangeListener = new NetworkChangeListener();
+    private ShimmerFrameLayout shimmerFrameLayout;
 
 
 
@@ -55,9 +52,19 @@ public class MainActivity extends AppCompatActivity {
         //Binding the layout with the activity
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
+
         setContentView(binding.getRoot());
-        replaceFragment(new HomeFragment());
-        //Shared Preferences
+            categories = new ArrayList<>();
+        apiClient = new ApiClient();
+        hideBottomNavigation();
+        shimmerFrameLayout = findViewById(R.id.shimmerLayout);
+        shimmerFrameLayout.startShimmer();
+        GetBooksAsync getBooksAsync = new GetBooksAsync();
+        getBooksAsync.execute();
+        //replaceFragment(new HomeFragment());
+
+        //use getBooksAsync to get the books from the api
+
 
 
 
@@ -78,10 +85,17 @@ public class MainActivity extends AppCompatActivity {
             }
             return true;
         });
-
     }
-
-
+//hide bottomNavigation
+    public void hideBottomNavigation(){
+        binding.bottomNavigation.setVisibility(View.GONE);
+    }
+    //show bottomNavigation with a transition effect
+    public void showBottomNavigation(){
+        binding.bottomNavigation.setVisibility(View.VISIBLE);
+        binding.bottomNavigation.setAlpha(0f);
+        binding.bottomNavigation.animate().alpha(1f).setDuration(500);
+    }
 
 
     private void replaceFragment(Fragment fragment) {
@@ -90,12 +104,59 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
-
-    public void setCategories(ArrayList<Category> categories) {
-        this.categories = categories;
-    }
-
     public ArrayList<Category> getCategories() {
         return categories;
+    }
+
+
+    class GetBooksAsync extends AsyncTask<Void, Void, Void> {
+        LocalBroadcastManager manager = LocalBroadcastManager.getInstance(getApplicationContext());
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            for (ECategories category : ECategories.values()) {
+                try {
+                    categories.add(new Category(category.toString(), apiClient.getBooks(category)));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+
+            Intent intent = new Intent("com.android.bookcastle");
+            intent.putExtra("categories", categories);
+            manager.sendBroadcast(intent);
+            replaceFragment(new HomeFragment());
+            shimmerFrameLayout.stopShimmer();
+            shimmerFrameLayout.setVisibility(View.GONE);
+            showBottomNavigation();
+
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+    @Override
+    protected void onStart() {
+        IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkChangeListener,intentFilter);
+        super.onStart();
+    }
+    @Override
+    protected void onStop() {
+        unregisterReceiver(networkChangeListener);
+        super.onStop();
     }
 }

@@ -65,10 +65,7 @@ public class Book {
 
     public String getImage() {
         //replace http with https
-        if (!TextUtils.isEmpty(image)) {
-            image = image.replace("http://", "https://");
-        }
-            return image.substring(0, image.lastIndexOf("&"));
+       return image;
     }
 
     public double getRating() {

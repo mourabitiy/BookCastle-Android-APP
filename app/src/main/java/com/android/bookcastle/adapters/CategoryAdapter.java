@@ -18,8 +18,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder> {
-    private List<Category> categories;
+    private List<Category> categories = new ArrayList<Category>();
     private Context context;
+
+
+    private ArrayList<Category> list = new ArrayList<Category>();
+
 
     public CategoryAdapter(ArrayList<Category> categories, Context context) {
         this.categories = categories;
@@ -31,6 +35,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     public CategoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.parent_rv_layout, null, false);
         return new CategoryViewHolder(view);
+    }
+    public CategoryAdapter(Context context) {
+        // Do not pass a list in the constructor, because the list may be empty
     }
 
     @Override
@@ -60,5 +67,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
             categoryName = itemView.findViewById(R.id.categorie_tv);
             childRecyclerView = itemView.findViewById(R.id.child_rv);
         }
+    }
+    public void setList(ArrayList<Category> list) {
+        this.categories = list;
+        notifyDataSetChanged();
     }
 }

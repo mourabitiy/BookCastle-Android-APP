@@ -64,7 +64,7 @@
                 android:text="@string/settings"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/colorPrimaryDark"
                 android:fontFamily="@font/nunito_semibold"
                 android:textSize="17dp"
                 />
