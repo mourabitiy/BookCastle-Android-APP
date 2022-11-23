@@ -44,9 +44,38 @@ public class ApiClient {
                     author += authorObject.getString("name") + ", ";
                 }
                 book.setAuthor(author);
-                //formats is an object
                 JSONObject formats = bookObject.getJSONObject("formats");
                 book.setImage(formats.getString("image/jpeg"));
+                JSONArray languages = bookObject.getJSONArray("languages");
+                String language = "";
+                for (int j = 0; j < languages.length(); j++) {
+                    if(j == languages.length() - 1) {
+                        language += languages.getString(j);
+                    } else {
+                        language += languages.getString(j) + ", ";
+                    }
+                }
+                book.setLanguage(language.toUpperCase());
+                book.setDescription("Dummy Description");
+                //get download_count int value
+                book.setDownload_count(bookObject.getInt("download_count"));
+                //Set a random rating from 1 to 5
+                book.setRating(Math.random() * 5);
+
+                String text;
+                if (formats.has("text/plain; charset=utf-8")) {
+                    text = formats.getString("text/plain; charset=utf-8");
+                    book.setPages((text.length()/1000));
+                } else if (formats.has("text/plain; charset=us-ascii")) {
+                        text = formats.getString("text/plain; charset=us-ascii");
+                        book.setPages((text.length()/1000));
+                } else if (formats.has("text/plain")) {
+                     text = formats.getString("text/plain");
+                    book.setPages((text.length()/1000));
+                } else {
+                    book.setPages(0);
+                }
+
                 classics.add(book);
             }
         } catch (JSONException e) {

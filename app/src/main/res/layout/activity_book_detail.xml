@@ -6,12 +6,12 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
     tools:context=".BookDetailActivity"
-    android:id="@+id/mainLayout">
+    android:id="@+id/main_layout">
 
     <ImageButton
         android:id="@+id/back_btn"
-        android:layout_width="40dp"
-        android:layout_height="35dp"
+        android:layout_width="48dp"
+        android:layout_height="42dp"
         android:layout_marginStart="30dp"
         android:layout_marginTop="30dp"
         android:backgroundTint="@color/transparent"
@@ -80,10 +80,11 @@
 
     <TextView
         android:id="@+id/book_title"
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:layout_marginTop="20dp"
+        android:layout_marginRight="10dp"
         android:fontFamily="@font/poppins_sb"
         android:text="The Art of not giving a fuck"
         android:textColor="@color/black"
@@ -146,6 +147,7 @@
                 android:textSize="12dp"  />
 
             <TextView
+                android:id="@+id/read_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -181,6 +183,7 @@
                 android:textSize="12dp"  />
 
             <TextView
+                android:id="@+id/language"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -211,18 +214,19 @@
                 android:layout_marginLeft="2dp"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/nexa_bold"
-                android:text="AGE"
+                android:text="PAGES"
                 android:textAlignment="center"
                 android:textColor="@color/df_transparent_black_background"
                 android:textSize="12dp" />
 
             <TextView
+                android:id="@+id/pages"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="2dp"
                 android:fontFamily="@font/karla"
-                android:text="+18"
+                android:text="475"
                 android:textColor="@color/black"
                 android:textSize="18dp" />
 
@@ -235,7 +239,6 @@
         android:id="@+id/btn_read"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@drawable/rounded_rectangle"
         android:text="Read Now"
         android:textSize="18dp"
         android:fontFamily="@font/poppins_sb"
