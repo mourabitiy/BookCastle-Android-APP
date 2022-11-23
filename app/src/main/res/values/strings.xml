@@ -23,4 +23,5 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="account_settings">Account Settings</string>
     <string name="logout">Logout</string>
+    <string name="language">LANGUAGE</string>
 </resources>

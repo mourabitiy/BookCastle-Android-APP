@@ -2,6 +2,7 @@ package com.android.bookcastle.adapters;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.bookcastle.BookDetailActivity;
 import com.android.bookcastle.R;
 import com.android.bookcastle.models.Book;
 import com.bumptech.glide.Glide;
@@ -55,13 +57,16 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
               .centerCrop()
                 .into(holder.bookImage);
 
-//        //on click listener for each book
-//        holder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(context, "Clicked on " + book.getTitle(), Toast.LENGTH_SHORT).show();
-//            }
-//        });
+        //on click listener for each book
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //open the book details activity
+                Intent intent = new Intent(context, BookDetailActivity.class);
+                intent.putExtra("book", book);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

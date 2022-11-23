@@ -4,206 +4,274 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BookDetailActivity">
+    android:background="@color/colorPrimary"
+    tools:context=".BookDetailActivity"
+    android:id="@+id/mainLayout">
 
-    <LinearLayout
-        android:id="@+id/linear_ll"
-        android:layout_width="match_parent"
+    <ImageButton
+        android:id="@+id/back_btn"
+        android:layout_width="40dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        android:backgroundTint="@color/transparent"
+        android:scaleType="fitXY"
+        android:src="@drawable/vector"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="30dp"
+        android:backgroundTint="@color/transparent"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_share"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/category"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal"
-        android:padding="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline7"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="120dp"
+        android:text="Science Fiction"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="64sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:layout_width="23dp"
-            android:layout_height="23dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/vector" />
-
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text=""
-            android:textColor="@android:color/black"
-            android:textSize="16dp"
-            android:textStyle="bold" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/bookmark" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout3"
+    <View
+        android:id="@+id/divider"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/rounded_corner"
-        android:orientation="vertical"
+        android:layout_height="1dp"
+        android:layout_marginBottom="432dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/guideline7"
-        app:layout_constraintVertical_bias="0.046"
-        tools:layout_editor_absoluteX="-16dp">
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/rounded_bg"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/rounded_corner_2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/divider"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/book_cover"
+        android:layout_width="200dp"
+        android:layout_height="300dp"
+        android:layout_marginBottom="-80dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/book1"
+        app:layout_constraintBottom_toTopOf="@id/rounded_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:shapeAppearanceOverlay="@style/roundedImageView" />
 
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/book_cover"
-            android:layout_width="250dp"
-            android:layout_height="350dp"
-            android:layout_gravity="center"
-            android:layout_marginBottom="10dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/book1"
-            app:shapeAppearanceOverlay="@style/roundedImageView" />
+    <TextView
+        android:id="@+id/book_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/poppins_sb"
+        android:text="The Art of not giving a fuck"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/book_cover" />
 
-        <TextView
-            android:id="@+id/book_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:fontFamily="@font/poppins_sb"
-            android:text="Catch me if you can"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="21dp" />
+    <TextView
+        android:id="@+id/book_author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:fontFamily="@font/nexa_regular"
+        android:text="Written by : Mathieu Fernandez"
+        android:textColor="@color/cardview_dark_background"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/book_title" />
 
-        <TextView
-            android:id="@+id/book_author"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="6dp"
-            android:fontFamily="@font/poppins_sb"
-            android:text="by Frank Abagnale"
-            android:textAlignment="center"
-            android:textColor="@color/df_transparent_black_background"
-            android:textSize="15dp"
-            app:textAllCaps="true" />
-    </LinearLayout>
+    <ImageButton
+        android:id="@+id/btn_fav"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="30dp"
+        android:background="@drawable/circle"
+        android:padding="12dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_bookmark"
+        app:layout_constraintBottom_toBottomOf="@id/book_author"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/book_title"
+        app:tint="@color/white" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="80dp"
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/gray_rounded_shape"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
-        android:layout_marginHorizontal="30dp"
         app:circularflow_radiusInDP="30dp"
-        android:background="@drawable/gray_rounded_shape">
+        app:layout_constraintTop_toBottomOf="@+id/book_author">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="vertical"
+            android:layout_marginLeft="5dp"
             android:gravity="center"
-            android:layout_marginLeft="5dp">
+            android:orientation="vertical">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:textSize="16dp"
-                android:textColor="@color/df_transparent_black_background"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
                 android:fontFamily="@font/nexa_bold"
-                android:layout_marginLeft="5dp"
-                android:text="Read count" />
+                android:text="READ COUNT"
+                android:textColor="@color/df_transparent_black_background"
+                android:textSize="12dp"  />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textSize="18dp"
-                android:layout_marginBottom="35dp"
-                android:fontFamily="@font/karla"
-                android:textColor="@color/black"
                 android:layout_marginLeft="5dp"
-                android:text="1875" />
+                android:fontFamily="@font/karla"
+                android:text="1875"
+                android:textColor="@color/black"
+                android:textSize="18dp" />
 
         </LinearLayout>
+
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:layout_marginHorizontal="10dp"
+            android:layout_marginHorizontal="12dp"
             android:layout_marginVertical="7dp"
-            android:background="@android:color/darker_gray"/>
+            android:background="@android:color/darker_gray" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:textSize="16dp"
-                android:textColor="@color/df_transparent_black_background"
+                android:layout_marginTop="10dp"
                 android:fontFamily="@font/nexa_bold"
-                android:layout_marginLeft="5dp"
-                android:text="Read count" />
+                android:text="@string/language"
+                android:textColor="@color/df_transparent_black_background"
+                android:textSize="12dp"  />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textSize="18dp"
-                android:layout_marginBottom="35dp"
                 android:fontFamily="@font/karla"
+                android:text="FR"
                 android:textColor="@color/black"
-                android:layout_marginLeft="5dp"
-                android:text="1875" />
+                android:textSize="18dp" />
 
         </LinearLayout>
+
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:layout_marginHorizontal="10dp"
+            android:layout_marginHorizontal="16dp"
             android:layout_marginVertical="7dp"
-            android:background="@android:color/darker_gray"/>
+            android:background="@android:color/darker_gray" />
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
+
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:textSize="16dp"
-                android:textColor="@color/df_transparent_black_background"
+                android:layout_marginLeft="2dp"
+                android:layout_marginTop="10dp"
                 android:fontFamily="@font/nexa_bold"
-                android:layout_marginLeft="5dp"
-                android:text="Read count" />
+                android:text="AGE"
+                android:textAlignment="center"
+                android:textColor="@color/df_transparent_black_background"
+                android:textSize="12dp" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textSize="18dp"
-                android:layout_marginBottom="35dp"
+                android:layout_marginLeft="2dp"
                 android:fontFamily="@font/karla"
+                android:text="+18"
                 android:textColor="@color/black"
-                android:layout_marginLeft="5dp"
-                android:text="1875" />
+                android:textSize="18dp" />
 
         </LinearLayout>
 
     </LinearLayout>
+
+
+    <Button
+        android:id="@+id/btn_read"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/rounded_rectangle"
+        android:text="Read Now"
+        android:textSize="18dp"
+        android:fontFamily="@font/poppins_sb"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline9"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintRight_toRightOf="@id/guideline9"
+        app:layout_constraintStart_toStartOf="@id/guideline8"
+        app:layout_constraintTop_toTopOf="@id/guideline7"
+        app:layout_constraintVertical_bias="1.0"
+        android:layout_marginBottom="30dp"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_end="667dp"
-        />
+        app:layout_constraintGuide_end="94dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="330dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="331dp" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
