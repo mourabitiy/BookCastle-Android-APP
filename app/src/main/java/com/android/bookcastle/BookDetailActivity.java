@@ -32,6 +32,7 @@ public class BookDetailActivity extends AppCompatActivity {
     TextView book_language;
     TextView read_count;
     TextView pages;
+    TextView book_description;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //GET THE BOOK FROM THE INTENT
@@ -44,7 +45,8 @@ public class BookDetailActivity extends AppCompatActivity {
         book_title = findViewById(R.id.book_title);
         book_language = findViewById(R.id.language);
         book_author = findViewById(R.id.book_author);
-        back_btn = findViewById(R.id.back_btn);
+        book_description = findViewById(R.id.book_description);
+        //back_btn = findViewById(R.id.back_btn);
         book_cover = findViewById(R.id.book_cover);
         read_count = findViewById(R.id.read_count);
         pages = findViewById(R.id.pages);
@@ -55,6 +57,9 @@ public class BookDetailActivity extends AppCompatActivity {
         book_language.setText(book.getLanguage());
         read_count.setText(String.valueOf(book.getDownload_count()));
         pages.setText(String.valueOf(book.getPages()));
+        book_description.setText(book.getDescription());
+
+
 //        Bitmap imageBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.book1);
 //
 //        book_cover.setImageBitmap(imageBitmap);
@@ -65,9 +70,9 @@ public class BookDetailActivity extends AppCompatActivity {
 //
 //        Bitmap backgroundDominantColorBitmap =PaletteUtils.getDominantGradient(imageBitmap,height,width);
 //        book_cover.setImageBitmap(backgroundDominantColorBitmap);
-        back_btn.setOnClickListener(v -> {
-            finish();
-        });
+//        back_btn.setOnClickListener(v -> {
+//            finish();
+//        });
     }
 
 

@@ -132,20 +132,16 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra("categories", categories);
             manager.sendBroadcast(intent);
             replaceFragment(new HomeFragment());
-            shimmerFrameLayout.stopShimmer();
-            shimmerFrameLayout.setVisibility(View.GONE);
-            showBottomNavigation();
 
         }
-
     }
 
-
-
-
-
-
-
+//create a method to disable shimmer effect
+    public void stopShimmer(){
+        shimmerFrameLayout.setVisibility(View.GONE);
+        shimmerFrameLayout.stopShimmer();
+        showBottomNavigation();
+    }
 
 
     @Override

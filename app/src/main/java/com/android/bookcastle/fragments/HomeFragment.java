@@ -37,12 +37,11 @@ import java.util.ArrayList;
 public class HomeFragment extends Fragment {
     RecyclerView recyclerView;
     CategoryAdapter categoryAdapter;
+    TextView welcome_msg;
     private CategoryAdapter adapter;
     ArrayList<Category> categories;
     ArrayList <Book>  books;
 
-
-    TextView welcome_msg;
     String username;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -88,7 +87,9 @@ public class HomeFragment extends Fragment {
         //get the shared preferences
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("login", MODE_PRIVATE);
         this.username = sharedPreferences.getString("username", "");
-        //select the recycler view inside the fragment
+        username = username.substring(0, 1).toUpperCase() + username.substring(1);
+        welcome_msg = view.findViewById(R.id.welcome_msg);
+        welcome_msg.setText("Welcome back, " + username);
         recyclerView = getView().findViewById(R.id.parent_rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -96,6 +97,7 @@ public class HomeFragment extends Fragment {
             categoryAdapter = new CategoryAdapter(categories,  getContext());
             recyclerView.setAdapter(categoryAdapter);
             categoryAdapter.notifyDataSetChanged();
+            ((MainActivity)getActivity()).stopShimmer();
     }
 
     private void initBroadCastReceiver() {
