@@ -63,13 +63,14 @@ public class BooksByCategoryAdapter extends RecyclerView.Adapter<BooksByCategory
             }
         });
     }
+
     @Override
     public int getItemCount() {
         return books.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView book_title, book_price, book_author, book_pages;
+        TextView book_title, book_price,  book_author, book_pages;
         RatingBar book_rating;
         ImageView book_image;
 
