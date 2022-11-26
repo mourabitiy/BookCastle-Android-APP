@@ -20,12 +20,32 @@ public class ApiClient {
 
 
 
-    public ArrayList<Book> getBooks(ECategories c) throws IOException {
+    public ArrayList<Book> getBooks(ECategories c, int shelve_capacity) throws IOException {
         client = new OkHttpClient();
-        Request request = new Request.Builder()
-                .url("http://gutendex.com/books?topic=" + c)
-                .get()
-                .build();
+        Request request;
+        if(shelve_capacity == -1){
+             request = new Request.Builder()
+                    .url("http://gutendex.com/books?topic=" + c)
+                    .get()
+                    .build();
+        }
+        else{//keep adding ?ids=1,2,3,4,5,6,7,8,9,10 to the url while the shelve_capacity is not reached
+            String url = "http://gutendex.com/books?ids=";
+            int i = 0;
+            while(shelve_capacity > 0){
+                url += i;
+                i++;
+                shelve_capacity--;
+                if(shelve_capacity > 0){
+                    url += ",";
+                }
+            }
+                   request = new Request.Builder()
+                    .url(url)
+                    .get()
+                    .build();
+        }
+
         Response response = client.newCall(request).execute();
         //parse the response
         ArrayList<Book> classics = new ArrayList<>();

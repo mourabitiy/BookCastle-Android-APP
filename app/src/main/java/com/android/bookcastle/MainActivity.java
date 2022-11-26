@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.android.bookcastle.api.ApiClient;
 import com.android.bookcastle.databinding.ActivityMainBinding;
+import com.android.bookcastle.factories.BookFactory;
 import com.android.bookcastle.fragments.BookmarkFragment;
 import com.android.bookcastle.fragments.ExploreFragment;
 import com.android.bookcastle.fragments.HomeFragment;
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
     ArrayList<Category> categories;
     ArrayList<Book> books;
-    ApiClient apiClient;
+    BookFactory bookFactory;
     NetworkChangeListener networkChangeListener = new NetworkChangeListener();
     private ShimmerFrameLayout shimmerFrameLayout;
 
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(binding.getRoot());
             categories = new ArrayList<>();
-        apiClient = new ApiClient();
+        bookFactory = new BookFactory();
         hideBottomNavigation();
         shimmerFrameLayout = findViewById(R.id.shimmerLayout);
         shimmerFrameLayout.startShimmer();
@@ -108,6 +109,23 @@ public class MainActivity extends AppCompatActivity {
         return categories;
     }
 
+    public void displaySearchDialog() {
+        SearchDialog searchDialog = new SearchDialog();
+        searchDialog.show(getSupportFragmentManager(), "Search Dialog");
+    }
+
+    public void setSearch(String search) {
+        Intent intent = new Intent("search");
+        intent.putExtra("search", search);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+    }
+
+    public void displayCategoryActivity(Category category) {
+        Intent intent = new Intent(this, CategoryActivity.class);
+        intent.putExtra("category", category);
+        startActivity(intent);
+    }
+
 
     class GetBooksAsync extends AsyncTask<Void, Void, Void> {
         LocalBroadcastManager manager = LocalBroadcastManager.getInstance(getApplicationContext());
@@ -116,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
         protected Void doInBackground(Void... voids) {
             for (ECategories category : ECategories.values()) {
                 try {
-                    categories.add(new Category(category.toString(), apiClient.getBooks(category)));
+                    categories.add(new Category(category.toString(), bookFactory.getBooks(category, -1)));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

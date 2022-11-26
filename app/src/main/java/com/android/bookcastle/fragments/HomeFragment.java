@@ -2,6 +2,7 @@ package com.android.bookcastle.fragments;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.app.SearchManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -9,15 +10,17 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,11 +29,6 @@ import com.android.bookcastle.R;
 import com.android.bookcastle.adapters.CategoryAdapter;
 import com.android.bookcastle.models.Book;
 import com.android.bookcastle.models.Category;
-import com.google.android.material.snackbar.Snackbar;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -41,6 +39,7 @@ public class HomeFragment extends Fragment {
     private CategoryAdapter adapter;
     ArrayList<Category> categories;
     ArrayList <Book>  books;
+    SearchView search;
 
     String username;
 
@@ -52,7 +51,6 @@ public class HomeFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private LocalBroadcastManager manager;
 
     public HomeFragment() {
     }
@@ -91,32 +89,26 @@ public class HomeFragment extends Fragment {
         welcome_msg = view.findViewById(R.id.welcome_msg);
         welcome_msg.setText("Welcome back, " + username);
         recyclerView = getView().findViewById(R.id.parent_rv);
+        search = getView().findViewById(R.id.search);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-            categories = ((MainActivity)getActivity()).getCategories();
-            categoryAdapter = new CategoryAdapter(categories,  getContext());
-            recyclerView.setAdapter(categoryAdapter);
-            categoryAdapter.notifyDataSetChanged();
-            ((MainActivity)getActivity()).stopShimmer();
+        categories = ((MainActivity) getActivity()).getCategories();
+        categoryAdapter = new CategoryAdapter(categories, getContext());
+        recyclerView.setAdapter(categoryAdapter);
+        categoryAdapter.notifyDataSetChanged();
+        ((MainActivity) getActivity()).stopShimmer();
+
+        SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
+        search.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
+        search.setIconifiedByDefault(false);
+        //display a dialog when the user clicks on the search icon
+        search.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity) getActivity()).displaySearchDialog();
+            }
+        });
+
     }
 
-    private void initBroadCastReceiver() {
-        manager = LocalBroadcastManager.getInstance(getContext());
-        MyBroadCastReceiver receiver = new MyBroadCastReceiver();
-        IntentFilter filter = new IntentFilter();
-        filter.addAction("com.android.bookcastle");
-        manager.registerReceiver(receiver,filter);
-    }
-
-
-    class MyBroadCastReceiver extends BroadcastReceiver {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            //get the categories from the intent
-            ArrayList<Category> categories = (ArrayList<Category>) intent.getSerializableExtra("categories");
-            adapter.setList(categories);
-            Toast.makeText(context, "RECEIVED", Toast.LENGTH_SHORT).show();
-        }
-    }
 }

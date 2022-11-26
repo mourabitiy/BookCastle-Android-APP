@@ -25,4 +25,6 @@
     <string name="logout">Logout</string>
     <string name="language">LANGUAGE</string>
     <string name="description">Overview</string>
+    <string name="search_label">Find a Book</string>
+    <string name="search_hint">Ex : 120 Laws Of Power</string>
 </resources>

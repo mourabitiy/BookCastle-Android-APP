@@ -110,7 +110,7 @@
                 app:layout_constraintTop_toTopOf="@+id/guideline2"
                 tools:layout_editor_absoluteX="20dp">
 
-                <EditText
+                <SearchView
                     android:id="@+id/search"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -118,14 +118,13 @@
                     android:layout_weight="100"
                     android:layout_marginTop="20dp"
                     android:background="@drawable/gray_rounded_shape"
-                    android:drawableLeft="@drawable/ic_search_gray_24dp"
-                    android:drawableRight="@drawable/icon_mic"
                     android:drawablePadding="8dp"
                     android:fontFamily="@font/nexa_regular"
                     android:hint="@string/search"
                     android:padding="11dp"
                     android:textColorHint="#9ea1b0"
                     tools:ignore="TouchTargetSizeCheck"
+                    android:imeOptions="actionSearch"
                     />
             </LinearLayout>
 
