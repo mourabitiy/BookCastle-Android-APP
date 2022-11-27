@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorPrimary</item>
+        <item name="android:windowContentTransitions">true</item>
     </style>
 
     <style name="CollapsingToolbar" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -62,5 +63,11 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">10dp</item>
     </style>
-    <!--styles for internet dialog ends here-->
+
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/lightGrey</item>
+        <item name="colorControlActivated">@color/duskYellow</item>
+    </style>    <!--styles for internet dialog ends here-->
+    <color name="lightGrey">#E0E0E0</color>
+    <color name="duskYellow">#ffc922</color>
 </resources>

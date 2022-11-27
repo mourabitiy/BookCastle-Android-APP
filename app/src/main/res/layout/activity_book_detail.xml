@@ -26,6 +26,7 @@
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/book_cover"
+                android:transitionName="coverTN"
                 android:layout_width="200dp"
                 android:layout_height="280dp"
                 android:layout_gravity="center"
@@ -41,6 +42,7 @@
 
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/rounded_corner_2"
@@ -51,22 +53,24 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:layout_marginTop="50dp"
+                android:transitionName="bookNameTN"
                 android:id="@+id/book_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
                 android:fontFamily="@font/poppins_sb"
                 android:text="The Art of not giving a F*"
                 android:textColor="@color/black"
                 android:textSize="20sp"
+                android:layout_marginLeft="40dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.291"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0" />
 
             <TextView
+                android:transitionName="bookAuthorTN"
                 android:id="@+id/book_author"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -77,6 +81,16 @@
                 android:textSize="15sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/book_title" />
+
+            <RatingBar
+                android:transitionName="bookRatingTN"
+                android:id="@+id/book_rating"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:theme="@style/RatingBar"
+                app:layout_constraintStart_toStartOf="@+id/book_author"
+                app:layout_constraintTop_toBottomOf="@+id/book_author" />
 
             <LinearLayout
                 android:id="@+id/infos"
@@ -226,10 +240,10 @@
                 android:layout_marginHorizontal="50dp"
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/poppins"
+                android:paddingBottom="70dp"
                 android:text="@string/description"
                 android:textColor="#9D9D9D"
                 android:textSize="15sp"
-                android:paddingBottom="70dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/book_description_title" />
@@ -245,28 +259,48 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btn_fav"
+<com.google.android.material.floatingactionbutton.FloatingActionButton        android:id="@+id/btn_fav"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="30dp"
-        android:tint="@color/white"
         app:backgroundTint="@color/breaker"
         android:baselineAlignBottom="false"
         android:layout_marginTop="50dp"
         android:scaleType="fitXY"
         android:clickable="true"
         app:fabSize="normal"
+        app:tint="@color/white"
         app:layout_anchor="@id/appbar"
-        android:src="@drawable/bookmark"
-        app:layout_anchorGravity="end|bottom"/>
+        android:src="@drawable/ic_favorite"
+        app:layout_anchorGravity="end|bottom"
+        />
 
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="30dp"
+        android:baselineAlignBottom="false"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="20dp"
+        android:scaleType="fitXY"
+        android:clickable="true"
+        app:rippleColor="@null"
+        app:backgroundTint="@color/white"
+        app:fabSize="mini"
+
+        android:src="@drawable/arrow_left"
+        app:layout_anchorGravity="start|bottom"
+        />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="0"
-        android:gravity="center|bottom">
+        android:gravity="center|bottom"
+        app:layout_anchor="@+id/nestedScrollView"
+        app:layout_anchorGravity="top|center">
 
         <Button
             android:id="@+id/btn_read"

@@ -15,11 +15,13 @@ import android.util.DisplayMetrics;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.android.bookcastle.models.Book;
 import com.android.bookcastle.utils.PaletteUtils;
 import com.bumptech.glide.Glide;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.imageview.ShapeableImageView;
 
 import java.util.List;
@@ -29,10 +31,12 @@ public class BookDetailActivity extends AppCompatActivity {
     ImageButton back_btn;
     ImageView book_cover;
     Button btn_read;
+    FloatingActionButton btn_back;
     TextView book_language;
     TextView read_count;
     TextView pages;
     TextView book_description;
+    RatingBar book_rating;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //GET THE BOOK FROM THE INTENT
@@ -46,6 +50,8 @@ public class BookDetailActivity extends AppCompatActivity {
         book_language = findViewById(R.id.language);
         book_author = findViewById(R.id.book_author);
         book_description = findViewById(R.id.book_description);
+        book_rating = findViewById(R.id.book_rating);
+        btn_back = findViewById(R.id.btn_back);
         //back_btn = findViewById(R.id.back_btn);
         book_cover = findViewById(R.id.book_cover);
         read_count = findViewById(R.id.read_count);
@@ -58,7 +64,13 @@ public class BookDetailActivity extends AppCompatActivity {
         read_count.setText(String.valueOf(book.getDownload_count()));
         pages.setText(String.valueOf(book.getPages()));
         book_description.setText(book.getDescription());
+        book_rating.setRating((float) book.getRating());
 
+        btn_back.setOnClickListener(v -> {
+            //back with a transition
+            onBackPressed();
+
+        });
 
 //        Bitmap imageBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.book1);
 //

@@ -1,7 +1,9 @@
 package com.android.bookcastle.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.transition.Fade;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.bookcastle.BookDetailActivity;
@@ -56,10 +59,17 @@ public class BooksByCategoryAdapter extends RecyclerView.Adapter<BooksByCategory
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Fade fade = new Fade();
+                View decor = ((Activity) context).getWindow().getDecorView();
+                fade.excludeTarget(android.R.id.statusBarBackground, true);
+                fade.excludeTarget(android.R.id.navigationBarBackground, true);
+                ((Activity) context).getWindow().setEnterTransition(fade);
+                ((Activity) context).getWindow().setExitTransition(fade);
                 //open the book details activity
                 Intent intent = new Intent(context, BookDetailActivity.class);
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context, holder.book_image, "coverTN");
                 intent.putExtra("book", book);
-                context.startActivity(intent);
+                context.startActivity(intent, options.toBundle());
             }
         });
     }
