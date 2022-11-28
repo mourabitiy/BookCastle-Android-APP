@@ -27,4 +27,14 @@
     <string name="description">Overview</string>
     <string name="search_label">Find a Book</string>
     <string name="search_hint">Ex : 120 Laws Of Power</string>
+    <string name="reader_s_profile">Reader\'s Profile</string>
+    <string name="username">Youssef Mourabiti</string>
+    <string name="usermail">mourabitiyoussef@gmail.com</string>
+    <string name="manage_your_profile">Manage your Profile</string>
+    <string name="daily_goal">Daily Goal</string>
+    <string name="you_have_read_0_pages_today" >You have read 20 minutes today</string>
+    <string name="favourite_books">Favorite Books</string>
+    <string name="you_have_0_favourite_books">You have 5 Favorite Books</string>
+    <string name="help">Need help? contact us.</string>
+    <string name="settings_2">Settings</string>
 </resources>

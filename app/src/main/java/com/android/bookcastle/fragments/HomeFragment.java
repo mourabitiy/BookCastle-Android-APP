@@ -20,6 +20,8 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,7 +42,7 @@ public class HomeFragment extends Fragment {
     ArrayList<Category> categories;
     ArrayList <Book>  books;
     SearchView search;
-
+    ImageView user_profile;
     String username;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -90,6 +92,7 @@ public class HomeFragment extends Fragment {
         welcome_msg.setText("Welcome back, " + username);
         recyclerView = getView().findViewById(R.id.parent_rv);
         search = getView().findViewById(R.id.search);
+        user_profile = getView().findViewById(R.id.user_profile);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         categories = ((MainActivity) getActivity()).getCategories();
@@ -109,6 +112,12 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        user_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity) getActivity()).displayUserProfile();
+            }
+        });
     }
 
 }

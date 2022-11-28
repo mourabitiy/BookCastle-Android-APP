@@ -14,6 +14,7 @@ import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
 
@@ -30,6 +31,7 @@ import com.android.bookcastle.utils.Common;
 import com.android.bookcastle.utils.ECategories;
 import com.android.bookcastle.utils.NetworkChangeListener;
 import com.facebook.shimmer.ShimmerFrameLayout;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -45,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     BookFactory bookFactory;
     NetworkChangeListener networkChangeListener = new NetworkChangeListener();
     private ShimmerFrameLayout shimmerFrameLayout;
+    MaterialAlertDialogBuilder builder;
 
 
 
@@ -124,6 +127,17 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, CategoryActivity.class);
         intent.putExtra("category", category);
         startActivity(intent);
+    }
+
+    public void displayUserProfile() {
+        //display a material dialog with user profile
+        builder = new MaterialAlertDialogBuilder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        View view = inflater.inflate(R.layout.layout_bottom_sheet, null);
+        //add a close button to the dialog
+        view.findViewById(R.id.close).setOnClickListener(v -> builder.create().dismiss());
+        builder.setView(view);
+        builder.show();
     }
 
 
