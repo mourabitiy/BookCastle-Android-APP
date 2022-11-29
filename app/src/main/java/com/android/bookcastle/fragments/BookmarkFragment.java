@@ -1,14 +1,26 @@
 package com.android.bookcastle.fragments;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.bookcastle.MainActivity;
 import com.android.bookcastle.R;
+import com.android.bookcastle.adapters.BookmarkAdapter;
+import com.android.bookcastle.adapters.BooksByCategoryAdapter;
+import com.android.bookcastle.models.Book;
+import com.android.bookcastle.models.User;
+import com.android.bookcastle.utils.UserDatabaseHelper;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,6 +33,11 @@ public class BookmarkFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    RecyclerView bookmarks_rv;
+    UserDatabaseHelper DB;
+    FloatingActionButton btn_back;
+    ArrayList<Book> books;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -60,7 +77,36 @@ public class BookmarkFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        DB = UserDatabaseHelper.getInstance(getContext());
+        books = DB.getAllBooks();
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_bookmark, container, false);
+        View view = inflater.inflate(R.layout.fragment_bookmark, container, false);
+        bookmarks_rv = view.findViewById(R.id.bookmarks_rv);
+        if(books.size() == 0) {
+            view.findViewById(R.id.bookmark_empty).setVisibility(View.VISIBLE);
+        }
+        BookmarkAdapter adapter = new BookmarkAdapter(DB.getAllBooks(), getContext());
+        bookmarks_rv.setAdapter(adapter);
+        bookmarks_rv.setLayoutManager(new LinearLayoutManager(getContext()));
+        btn_back = view.findViewById(R.id.back_btn);
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //go back to home fragment
+                //call the replace fragment method of the main activity
+                ((MainActivity) getActivity()).replaceFragment(new HomeFragment());
+            }
+        });
+        return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        books = DB.getAllBooks();
+        BookmarkAdapter adapter = new BookmarkAdapter(DB.getAllBooks(), getContext());
+        bookmarks_rv.setAdapter(adapter);
+        bookmarks_rv.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 }

@@ -2,6 +2,7 @@ package com.android.bookcastle.utils;
 
 import static android.content.ContentValues.TAG;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -9,20 +10,37 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.android.bookcastle.models.Book;
 import com.android.bookcastle.models.User;
+
+import java.util.ArrayList;
 
 public class UserDatabaseHelper extends SQLiteOpenHelper {
     // Database Info
-    private static final String DATABASE_NAME = "BookCastleDatabase";
+    private static final String DATABASE_NAME = "BookCastleDB";
     private static final int DATABASE_VERSION = 1;
 
     // Table Names
     private static final String TABLE_USERS = "users";
+    private static final String TABLE_SAVED_BOOKS = "saved_books";
 
     // User Table Columns
     private static final String KEY_USER_ID = "id";
     private static final String KEY_USER_NAME = "username";
     private static final String KEY_USER_PASSWORD = "password";
+
+    // Saved Books Table Columns
+    private static final String KEY_BOOK_ID = "id";
+    private static final String KEY_BOOK_TITLE = "title";
+    private static final String KEY_BOOK_AUTHOR = "author";
+    private static final String KEY_BOOK_IMAGE = "image";
+    private static final String KEY_BOOK_DESCRIPTION = "description";
+    private static final String KEY_BOOK_LANGUAGE = "language";
+    private static final String KEY_BOOK_PAGES = "pages";
+    private static final String KEY_BOOK_DOWNLOAD_COUNT = "download_count";
+    private static final String KEY_BOOK_RATING = "rating";
+
+
 
     private static UserDatabaseHelper sInstance;
 
@@ -35,10 +53,7 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
         return sInstance;
     }
 
-    /**
-     * Constructor should be private to prevent direct instantiation.
-     * Make a call to the static method "getInstance()" instead.
-     */
+
     private UserDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -62,7 +77,20 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
                 KEY_USER_PASSWORD + " TEXT" +
                 ")";
 
+        String CREATE_SAVED_BOOKS_TABLE = "CREATE TABLE " + TABLE_SAVED_BOOKS +
+                "(" +
+                KEY_BOOK_ID + " INTEGER PRIMARY KEY," + // Define a primary key
+                KEY_BOOK_TITLE + " TEXT, " + // Define title
+                KEY_BOOK_AUTHOR + " TEXT, " + // Define author
+                KEY_BOOK_IMAGE + " TEXT, " + // Define image
+                KEY_BOOK_DESCRIPTION + " TEXT, " + // Define description
+                KEY_BOOK_LANGUAGE + " TEXT, " + // Define language
+                KEY_BOOK_PAGES + " INTEGER, " + // Define pages
+                KEY_BOOK_DOWNLOAD_COUNT + " INTEGER, " + // Define download count
+                KEY_BOOK_RATING + " INTEGER" + // Define rating
+                ")";
         db.execSQL(CREATE_USERS_TABLE);
+        db.execSQL(CREATE_SAVED_BOOKS_TABLE);
     }
 
     // Called when the database needs to be upgraded.
@@ -71,7 +99,8 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         if (oldVersion != newVersion) {
-            db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS + ";");
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_SAVED_BOOKS + ";");
             onCreate(db);
         }
     }
@@ -167,5 +196,108 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
             return false;
         }
     }
-    //TODO: Add methods for bookmarks and read time
+    //Add a book to the database
+    public Boolean addBook(Book book) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        // It's a good idea to wrap our insert in a transaction. This helps with performance and ensures
+        // consistency of the database.
+        db.beginTransaction();
+        try {
+            // The user might already exist in the database (i.e. the same user created multiple posts).
+            ContentValues values = new ContentValues();
+            values.put(KEY_BOOK_ID, book.getId());
+            values.put(KEY_BOOK_TITLE, book.getTitle());
+            values.put(KEY_BOOK_AUTHOR, book.getAuthor());
+            values.put(KEY_BOOK_IMAGE, book.getImage());
+            values.put(KEY_BOOK_DESCRIPTION, book.getDescription());
+            values.put(KEY_BOOK_LANGUAGE, book.getLanguage());
+            values.put(KEY_BOOK_PAGES, book.getPages());
+            values.put(KEY_BOOK_DOWNLOAD_COUNT, book.getDownload_count());
+            values.put(KEY_BOOK_RATING, book.getRating());
+
+            db.insertOrThrow(TABLE_SAVED_BOOKS, null, values);
+            db.setTransactionSuccessful();
+            return true;
+        } catch (Exception e) {
+            Log.d(TAG, "Error while trying to add book to database");
+            return false;
+        } finally {
+            db.endTransaction();
+        }
+    }
+
+    public boolean removeBook(String bookId) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();
+        try {
+            // Order of deletions is important when foreign key relationships exist.
+            db.delete(TABLE_SAVED_BOOKS, KEY_BOOK_ID + " = ?", new String[]{bookId});
+            db.setTransactionSuccessful();
+            return true;
+        } catch (Exception e) {
+            Log.d(TAG, "Error while trying to delete book");
+            return false;
+        } finally {
+            db.endTransaction();
+        }
+    }
+    @SuppressLint("Range")
+    public ArrayList<Book> getAllBooks() {
+        ArrayList<Book> books = new ArrayList<>();
+
+        String BOOKS_SELECT_QUERY =
+                String.format("SELECT * FROM %s",
+                        TABLE_SAVED_BOOKS);
+
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery(BOOKS_SELECT_QUERY, null);
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    Book newBook = new Book();
+                    newBook.setId(cursor.getString(cursor.getColumnIndex(KEY_BOOK_ID)));
+                    newBook.setTitle(cursor.getString(cursor.getColumnIndex(KEY_BOOK_TITLE)));
+                    newBook.setAuthor(cursor.getString(cursor.getColumnIndex(KEY_BOOK_AUTHOR)));
+                    newBook.setImage(cursor.getString(cursor.getColumnIndex(KEY_BOOK_IMAGE)));
+                    newBook.setDescription(cursor.getString(cursor.getColumnIndex(KEY_BOOK_DESCRIPTION)));
+                    newBook.setLanguage(cursor.getString(cursor.getColumnIndex(KEY_BOOK_LANGUAGE)));
+                    newBook.setPages(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_BOOK_PAGES))));
+                    newBook.setDownload_count(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_BOOK_DOWNLOAD_COUNT))));
+                    newBook.setRating(Double.parseDouble(cursor.getString(cursor.getColumnIndex(KEY_BOOK_RATING))));
+                    books.add(newBook);
+                } while(cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            Log.d(TAG, "Error while trying to get books from database");
+        } finally {
+            if (cursor != null && !cursor.isClosed()) {
+                cursor.close();
+            }
+        }
+        return books;
+    }
+
+    public void deleteBookmark(String id) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();
+        try {
+            db.delete(TABLE_SAVED_BOOKS, KEY_BOOK_ID + " = ?", new String[]{id});
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.d(TAG, "Error while trying to delete bookmark");
+        } finally {
+            db.endTransaction();
+        }
+    }
+
+    public boolean isFav(String id) {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_SAVED_BOOKS + " WHERE " + KEY_BOOK_ID + " = ?", new String[]{id});
+        if(cursor.getCount() > 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

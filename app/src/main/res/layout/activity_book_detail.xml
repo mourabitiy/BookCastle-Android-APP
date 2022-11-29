@@ -259,17 +259,18 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
-<com.google.android.material.floatingactionbutton.FloatingActionButton        android:id="@+id/btn_fav"
+<com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_fav"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="30dp"
-        app:backgroundTint="@color/breaker"
+        app:backgroundTint="@color/white"
         android:baselineAlignBottom="false"
         android:layout_marginTop="50dp"
         android:scaleType="fitXY"
         android:clickable="true"
         app:fabSize="normal"
-        app:tint="@color/white"
+        app:tint="@color/lightGrey"
         app:layout_anchor="@id/appbar"
         android:src="@drawable/ic_favorite"
         app:layout_anchorGravity="end|bottom"

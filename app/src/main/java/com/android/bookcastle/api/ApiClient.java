@@ -70,7 +70,11 @@ public class ApiClient {
                 String author = "";
                 for (int j = 0; j < authors.length(); j++) {
                     JSONObject authorObject = authors.getJSONObject(j);
-                    author += authorObject.getString("name") + ", ";
+                    if(j == 0){
+                        author += authorObject.getString("name");
+                    }else{
+                        author += ", " + authorObject.getString("name");
+                    }
                 }
                 book.setAuthor(author);
                 JSONObject formats = bookObject.getJSONObject("formats");

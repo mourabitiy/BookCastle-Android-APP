@@ -3,6 +3,8 @@ package com.android.bookcastle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.palette.graphics.Palette;
 
@@ -10,6 +12,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -26,12 +29,15 @@ import com.android.bookcastle.factories.BookFactory;
 import com.android.bookcastle.fragments.HomeFragment;
 import com.android.bookcastle.models.Book;
 import com.android.bookcastle.models.Category;
+import com.android.bookcastle.models.User;
 import com.android.bookcastle.utils.ECategories;
 import com.android.bookcastle.utils.PaletteUtils;
+import com.android.bookcastle.utils.UserDatabaseHelper;
 import com.bumptech.glide.Glide;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.imageview.ShapeableImageView;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.io.IOException;
 import java.util.List;
@@ -47,16 +53,20 @@ public class BookDetailActivity extends AppCompatActivity {
     TextView book_description;
     RatingBar book_rating;
     BookFactory mBookFactory;
-
+    FloatingActionButton btn_fav;
+    UserDatabaseHelper DB;
+    boolean isFav;
     Book book;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Intent intent = getIntent();
         book = (Book) intent.getSerializableExtra("book");
-
+        DB = UserDatabaseHelper.getInstance(this);
+        isFav = DB.isFav(book.getId());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_detail);
         btn_read = findViewById(R.id.btn_read);
+        btn_fav = findViewById(R.id.btn_fav);
         book_title = findViewById(R.id.book_title);
         book_language = findViewById(R.id.language);
         book_author = findViewById(R.id.book_author);
@@ -75,6 +85,7 @@ public class BookDetailActivity extends AppCompatActivity {
         book_description.setText(book.getDescription());
         book_rating.setRating((float) book.getRating());
 
+
         btn_back.setOnClickListener(v -> {
             onBackPressed();
 
@@ -85,6 +96,15 @@ public class BookDetailActivity extends AppCompatActivity {
             selectedBook.execute();
         });
 
+        if(isFav){
+            Drawable drawable = btn_fav.getDrawable();
+            drawable = DrawableCompat.wrap(drawable);
+            DrawableCompat.setTint(drawable, ContextCompat.getColor(this, R.color.breaker));
+        }
+        btn_fav.setOnClickListener(v -> {
+            saveBookToDatabase();
+
+        });
 //        Bitmap imageBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.book1);
 //
 //        book_cover.setImageBitmap(imageBitmap);
@@ -132,5 +152,23 @@ public class BookDetailActivity extends AppCompatActivity {
         startActivity(intent1);
     }
 
-
+    //Saving book to database
+    private void saveBookToDatabase() {
+        if(isFav){
+            DB.removeBook(book.getId());
+            isFav = false;
+            Drawable drawable = btn_fav.getDrawable();
+            drawable = DrawableCompat.wrap(drawable);
+            DrawableCompat.setTint(drawable, ContextCompat.getColor(this, R.color.fav_icon_tint));
+            Snackbar.make(btn_fav, "Removed from favorites", Snackbar.LENGTH_SHORT).show();
+        }
+        else{
+            DB.addBook(book);
+            isFav = true;
+            Drawable drawable = btn_fav.getDrawable();
+            drawable = DrawableCompat.wrap(drawable);
+            DrawableCompat.setTint(drawable, ContextCompat.getColor(this, R.color.breaker));
+            Snackbar.make(btn_fav, "Added to favorites", Snackbar.LENGTH_SHORT).show();
+        }
+    }
 }

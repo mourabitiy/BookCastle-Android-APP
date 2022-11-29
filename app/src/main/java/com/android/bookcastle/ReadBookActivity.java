@@ -38,8 +38,6 @@ public class ReadBookActivity extends AppCompatActivity {
     btn_back.setOnClickListener(v -> {
              onBackPressed();
         });
-
-
     }
 
 
