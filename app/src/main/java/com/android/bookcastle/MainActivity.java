@@ -99,8 +99,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void replaceFragment(Fragment fragment) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        //use the to left, to right from left, from right animations
-        fragmentTransaction.setCustomAnimations(R.anim.from_left, R.anim.from_right);
         fragmentTransaction.replace(R.id.frameLayout, fragment);
         fragmentTransaction.commit();
     }
