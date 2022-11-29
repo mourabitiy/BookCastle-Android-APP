@@ -3,32 +3,41 @@ package com.android.bookcastle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.palette.graphics.Palette;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.android.bookcastle.api.ApiClient;
+import com.android.bookcastle.factories.BookFactory;
+import com.android.bookcastle.fragments.HomeFragment;
 import com.android.bookcastle.models.Book;
+import com.android.bookcastle.models.Category;
+import com.android.bookcastle.utils.ECategories;
 import com.android.bookcastle.utils.PaletteUtils;
 import com.bumptech.glide.Glide;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.imageview.ShapeableImageView;
 
+import java.io.IOException;
 import java.util.List;
 
 public class BookDetailActivity extends AppCompatActivity {
     TextView book_title, book_author, book_desc;
-    ImageButton back_btn;
     ImageView book_cover;
     Button btn_read;
     FloatingActionButton btn_back;
@@ -37,11 +46,13 @@ public class BookDetailActivity extends AppCompatActivity {
     TextView pages;
     TextView book_description;
     RatingBar book_rating;
+    BookFactory mBookFactory;
+
+    Book book;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //GET THE BOOK FROM THE INTENT
         Intent intent = getIntent();
-        Book book = (Book) intent.getSerializableExtra("book");
+        book = (Book) intent.getSerializableExtra("book");
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_detail);
@@ -52,13 +63,11 @@ public class BookDetailActivity extends AppCompatActivity {
         book_description = findViewById(R.id.book_description);
         book_rating = findViewById(R.id.book_rating);
         btn_back = findViewById(R.id.btn_back);
-        //back_btn = findViewById(R.id.back_btn);
         book_cover = findViewById(R.id.book_cover);
         read_count = findViewById(R.id.read_count);
         pages = findViewById(R.id.pages);
         book_title.setText(book.getTitle());
         book_author.setText("Written by : " + book.getAuthor());
-        //set image using glide*
         Glide.with(this).load(book.getImage()).into(book_cover);
         book_language.setText(book.getLanguage());
         read_count.setText(String.valueOf(book.getDownload_count()));
@@ -67,9 +76,13 @@ public class BookDetailActivity extends AppCompatActivity {
         book_rating.setRating((float) book.getRating());
 
         btn_back.setOnClickListener(v -> {
-            //back with a transition
             onBackPressed();
 
+        });
+        btn_read.setOnClickListener(v -> {
+            mBookFactory = new BookFactory();
+            GetBookContent selectedBook = new GetBookContent(book.getId());
+            selectedBook.execute();
         });
 
 //        Bitmap imageBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.book1);
@@ -85,6 +98,38 @@ public class BookDetailActivity extends AppCompatActivity {
 //        back_btn.setOnClickListener(v -> {
 //            finish();
 //        });
+    }
+    class GetBookContent extends AsyncTask<Void, Void, String> {
+        private String id;
+        public GetBookContent(String id) {
+            this.id = id;
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            String content = null;
+            try {
+                content = mBookFactory.GetBookContentById(id);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return content;
+        }
+        @Override
+        protected void onPostExecute(String content) {
+            super.onPostExecute(content);
+            book.setContent(content);
+
+           showContent();
+
+
+        }
+    }
+
+    private void showContent() {
+        Intent intent1 = new Intent(BookDetailActivity.this, ReadBookActivity.class);
+        intent1.putExtra("book", book);
+        startActivity(intent1);
     }
 
 

@@ -49,4 +49,8 @@ public class BookFactory {
             books.addAll(category.getBooks());
         });
     }
+
+    public String GetBookContentById(String id) throws IOException {
+        return api.getBookContentById(id);
+    }
 }

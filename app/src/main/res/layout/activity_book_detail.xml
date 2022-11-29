@@ -304,15 +304,33 @@
 
         <Button
             android:id="@+id/btn_read"
-            android:layout_width="200dp"
+            android:layout_width="150dp"
             android:layout_height="60dp"
             android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="40dp"
             android:backgroundTint="@color/breaker"
             android:fontFamily="@font/poppins"
-            android:text="Read Now"
+            android:text="@string/read_now"
+            android:textAllCaps="false"
             android:textColor="@color/white"
-            android:textSize="15dp"
+            android:textSize="13dp"
             android:textStyle="bold" />
+        <Button
+            android:id="@+id/btn_download"
+            android:layout_width="150dp"
+            android:layout_height="60dp"
+            android:textAllCaps="false"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="40dp"
+            android:backgroundTint="#19191B"
+            android:fontFamily="@font/poppins_sb"
+            android:text="@string/download"
+            android:textColor="@color/white"
+            android:textSize="13dp"
+            android:textStyle="bold" />
+
 
     </RelativeLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -67,10 +67,6 @@ public class MainActivity extends AppCompatActivity {
         getBooksAsync.execute();
         //replaceFragment(new HomeFragment());
 
-        //use getBooksAsync to get the books from the api
-
-
-
 
         binding.bottomNavigation.setOnItemSelectedListener( item -> {
             switch (item.getItemId()) {
@@ -90,11 +86,10 @@ public class MainActivity extends AppCompatActivity {
             return true;
         });
     }
-//hide bottomNavigation
+
     public void hideBottomNavigation(){
         binding.bottomNavigation.setVisibility(View.GONE);
     }
-    //show bottomNavigation with a transition effect
     public void showBottomNavigation(){
         binding.bottomNavigation.setVisibility(View.VISIBLE);
         binding.bottomNavigation.setAlpha(0f);
@@ -130,11 +125,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void displayUserProfile() {
-        //display a material dialog with user profile
         builder = new MaterialAlertDialogBuilder(this);
         LayoutInflater inflater = getLayoutInflater();
         View view = inflater.inflate(R.layout.layout_bottom_sheet, null);
-        //add a close button to the dialog
         view.findViewById(R.id.close).setOnClickListener(v -> builder.create().dismiss());
         builder.setView(view);
         builder.show();
@@ -142,8 +135,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     class GetBooksAsync extends AsyncTask<Void, Void, Void> {
-        LocalBroadcastManager manager = LocalBroadcastManager.getInstance(getApplicationContext());
-
         @Override
         protected Void doInBackground(Void... voids) {
             for (ECategories category : ECategories.values()) {
@@ -162,19 +153,16 @@ public class MainActivity extends AppCompatActivity {
 
             Intent intent = new Intent("com.android.bookcastle");
             intent.putExtra("categories", categories);
-            manager.sendBroadcast(intent);
             replaceFragment(new HomeFragment());
 
         }
     }
 
-//create a method to disable shimmer effect
     public void stopShimmer(){
         shimmerFrameLayout.setVisibility(View.GONE);
         shimmerFrameLayout.stopShimmer();
         showBottomNavigation();
     }
-
 
     @Override
     protected void onStart() {
@@ -186,5 +174,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onStop() {
         unregisterReceiver(networkChangeListener);
         super.onStop();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 }

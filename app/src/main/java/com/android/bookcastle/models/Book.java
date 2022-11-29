@@ -21,6 +21,7 @@ public class Book implements Serializable {
     private int pages;
     private String language;
     private int download_count;
+    private String content;
 
     public Book(String id, String title, String author, String description, String image, double rating, int pages) {
         this.id = id;
@@ -118,4 +119,13 @@ public class Book implements Serializable {
     public void setDownload_count(int download_count) {
         this.download_count = download_count;
     }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
 }
