@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.palette.graphics.Palette;
 
@@ -23,9 +24,11 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.bookcastle.api.ApiClient;
 import com.android.bookcastle.factories.BookFactory;
+import com.android.bookcastle.fragments.BookmarkFragment;
 import com.android.bookcastle.fragments.HomeFragment;
 import com.android.bookcastle.models.Book;
 import com.android.bookcastle.models.Category;
@@ -54,6 +57,7 @@ public class BookDetailActivity extends AppCompatActivity {
     RatingBar book_rating;
     BookFactory mBookFactory;
     FloatingActionButton btn_fav;
+    BookmarkFragment bookmarkFragment = new BookmarkFragment();
     UserDatabaseHelper DB;
     boolean isFav;
     Book book;
@@ -161,6 +165,10 @@ public class BookDetailActivity extends AppCompatActivity {
             drawable = DrawableCompat.wrap(drawable);
             DrawableCompat.setTint(drawable, ContextCompat.getColor(this, R.color.fav_icon_tint));
             Snackbar.make(btn_fav, "Removed from favorites", Snackbar.LENGTH_SHORT).show();
+            //recharge the fragment view
+            bookmarkFragment.onResume();
+
+
         }
         else{
             DB.addBook(book);

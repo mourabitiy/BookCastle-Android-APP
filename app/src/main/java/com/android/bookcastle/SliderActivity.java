@@ -46,7 +46,7 @@ public class SliderActivity extends AppCompatActivity {
             if(onBoardingViewPager.getCurrentItem() + 1 < onBoardingAdapter.getItemCount()){
                 onBoardingViewPager.setCurrentItem(onBoardingViewPager.getCurrentItem() + 1);
             }else{
-                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                startActivity(new Intent(getApplicationContext(), GetstartedActivity.class));
                 finish();
             }
         });
@@ -55,15 +55,12 @@ public class SliderActivity extends AppCompatActivity {
 
     private void setupOnBoardingAdapter() {
         List<OnBoardingItems> onBoardingItems = new ArrayList<>();
-        OnBoardingItems item1 = new OnBoardingItems(R.drawable.frame1, "A NEW WAY TOO READ",
-                "Start reading the world’s" +
-                        "best books for free today");
-        OnBoardingItems item2 = new OnBoardingItems(R.drawable.frame2, "A NEW WAY TOO READ",
-                "Start reading the world’s" +
-                        "best books for free today");
-        OnBoardingItems item3 = new OnBoardingItems(R.drawable.frame3, "A NEW WAY TOO READ",
-                " Start reading the world’s" +
-                        "best books for free today");
+        OnBoardingItems item1 = new OnBoardingItems(R.drawable.f1, "Explore, learn and grow",
+                "Read across categories and save your favorties to your library");
+        OnBoardingItems item2 = new OnBoardingItems(R.drawable.f2, "Stay Updated",
+        "get latest updates on books, Authors and more");
+        OnBoardingItems item3 = new OnBoardingItems(R.drawable.f3, "Make a good choice",
+        "Set a reading goal and track your progress");
         onBoardingItems.add(item1);
         onBoardingItems.add(item2);
         onBoardingItems.add(item3);

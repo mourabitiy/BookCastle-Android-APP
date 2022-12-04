@@ -41,6 +41,7 @@ import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
 
+
     ActivityMainBinding binding;
     ArrayList<Category> categories;
     ArrayList<Book> books;

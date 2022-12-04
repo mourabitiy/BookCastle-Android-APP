@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,8 +19,8 @@ import com.google.android.material.snackbar.Snackbar;
 
 public class LoginActivity extends AppCompatActivity {
     EditText username1, password1;
-    Button btnLogin;
-    TextView tvRegister;
+    ImageButton btnLogin;
+    TextView tvRegister, forgot_password;
     UserDatabaseHelper DB;
 
     @Override

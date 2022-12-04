@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.android.bookcastle.MainActivity;
 import com.android.bookcastle.R;
@@ -38,6 +39,7 @@ public class BookmarkFragment extends Fragment {
     UserDatabaseHelper DB;
     FloatingActionButton btn_back;
     ArrayList<Book> books;
+    TextView bookmark_empty;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -62,7 +64,9 @@ public class BookmarkFragment extends Fragment {
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
+
         return fragment;
+
     }
 
     @Override
@@ -80,16 +84,20 @@ public class BookmarkFragment extends Fragment {
         DB = UserDatabaseHelper.getInstance(getContext());
         books = DB.getAllBooks();
 
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_bookmark, container, false);
         bookmarks_rv = view.findViewById(R.id.bookmarks_rv);
+        bookmark_empty = view.findViewById(R.id.bookmark_empty);
         if(books.size() == 0) {
-            view.findViewById(R.id.bookmark_empty).setVisibility(View.VISIBLE);
+            bookmark_empty.setVisibility(View.VISIBLE);
         }
-        BookmarkAdapter adapter = new BookmarkAdapter(DB.getAllBooks(), getContext());
-        bookmarks_rv.setAdapter(adapter);
-        bookmarks_rv.setLayoutManager(new LinearLayoutManager(getContext()));
-        btn_back = view.findViewById(R.id.back_btn);
+        else {
+            BookmarkAdapter adapter = new BookmarkAdapter(DB.getAllBooks(), getContext());
+            bookmarks_rv.setAdapter(adapter);
+            bookmarks_rv.setLayoutManager(new LinearLayoutManager(getContext()));
+            btn_back = view.findViewById(R.id.back_btn);
+        }
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,8 +106,10 @@ public class BookmarkFragment extends Fragment {
                 ((MainActivity) getActivity()).replaceFragment(new HomeFragment());
             }
         });
+
         return view;
     }
+
 
     @Override
     public void onResume() {
@@ -109,4 +119,5 @@ public class BookmarkFragment extends Fragment {
         bookmarks_rv.setAdapter(adapter);
         bookmarks_rv.setLayoutManager(new LinearLayoutManager(getContext()));
     }
+
 }
