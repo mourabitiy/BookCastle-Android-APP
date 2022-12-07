@@ -44,4 +44,12 @@
     <string name="sign_in">Sign In</string>
     <string name="don_t_you_have_an_account_create_one">Don\'t you have an account?</string>
     <string name="create_one">Create One</string>
+    <string name="become_the_king_of_your_own_castle">Become the king of your own castle</string>
+    <string name="email">Email</string>
+    <string name="gender">Gender</string>
+    <string name="confirm_your_password">Confirm your Password</string>
+    <string name="password">Password</string>
+    <string name="create_a_castle_from_bricks_and_books">Create a castle from bricks and books</string>
+    <string name="i_confirm_that_i_have_read_and_accepted_the_terms_of_use_and_privacy_policy">I confirm that I have read and accepted the Terms of Use and Privacy Policy</string>
+    <string name="search_book">Search for a book</string>
 </resources>

@@ -15,20 +15,6 @@
             android:paddingHorizontal="5dp"
             tools:context=".MainActivity">
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/scrollTopButton_feed"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="28dp"
-                android:alpha="0.90"
-                android:clickable="true"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.49"
-                app:layout_constraintStart_toStartOf="parent"
-                app:srcCompat="@drawable/arrow_left" />
-
             <LinearLayout
                 android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
@@ -110,13 +96,12 @@
                     android:layout_weight="100"
                     android:layout_marginTop="20dp"
                     android:background="@drawable/gray_rounded_shape"
-                    android:drawablePadding="8dp"
                     android:fontFamily="@font/nexa_regular"
                     android:hint="@string/search"
-                    android:padding="11dp"
                     android:textColorHint="#9ea1b0"
+                    android:iconifiedByDefault="false"
+                    android:focusedByDefault="false"
                     tools:ignore="TouchTargetSizeCheck"
-                    android:imeOptions="actionSearch"
                     />
             </LinearLayout>
 

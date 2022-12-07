@@ -165,7 +165,6 @@ public class BookDetailActivity extends AppCompatActivity {
             drawable = DrawableCompat.wrap(drawable);
             DrawableCompat.setTint(drawable, ContextCompat.getColor(this, R.color.fav_icon_tint));
             Snackbar.make(btn_fav, "Removed from favorites", Snackbar.LENGTH_SHORT).show();
-            //recharge the fragment view
             bookmarkFragment.onResume();
 
 

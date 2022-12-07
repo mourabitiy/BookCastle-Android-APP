@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:text="Become the king of your own castle"
+        android:text="@string/become_the_king_of_your_own_castle"
         android:textSize="40px"
         android:textColor="@color/bg_dark"
         android:fontFamily="@font/poppins"
@@ -89,7 +89,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:text="Forgot your password?"
-        android:textSize="32px"
+        android:textSize="12dp"
         android:textColor="@color/bg_dark"
         android:fontFamily="@font/poppins"
         app:layout_constraintEnd_toEndOf="parent"
@@ -121,12 +121,12 @@
         android:onClick="slideUp"
         android:text="Sign in"
         android:textColor="@color/bg_dark"
-        android:textSize="48px"
+        android:textSize="18dp"
         app:layout_constraintEnd_toStartOf="@+id/btnLogin"
         app:layout_constraintTop_toBottomOf="@+id/forgot_password" />
 
     <TextView
-        android:id="@+id/tvRegister"
+        android:id="@+id/tv5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -141,6 +141,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
+        android:id="@+id/tvRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -149,7 +150,7 @@
         android:text="@string/create_one"
 
         android:textColor="@color/breaker"
-        app:layout_constraintBottom_toBottomOf="@+id/tvRegister"
-        app:layout_constraintStart_toEndOf="@+id/tvRegister" />
+        app:layout_constraintBottom_toBottomOf="@+id/tv5"
+        app:layout_constraintStart_toEndOf="@+id/tv5" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

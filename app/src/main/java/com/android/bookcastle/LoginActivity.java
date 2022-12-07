@@ -2,9 +2,12 @@ package com.android.bookcastle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.transition.Fade;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -37,7 +40,6 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("login", MODE_PRIVATE);
 
         if(sharedPreferences.getBoolean("logged", false)){
-            Log.d("LoginActivity", "onCreate: " + sharedPreferences.getString("username", "NOT STORED"));
             goToMain(loggedUser);
         }
 
@@ -66,6 +68,7 @@ public class LoginActivity extends AppCompatActivity {
                         editor.putBoolean("logged", true);
                         editor.putString("username", user);
                         editor.putString("password", pass);
+                        editor.putString("gender", DB.getGender(user));
                         editor.apply();
 
                         goToMain(loggedUser);
@@ -83,8 +86,12 @@ public class LoginActivity extends AppCompatActivity {
                 }
         });
         tvRegister.setOnClickListener(v -> {
-                Intent intent = new Intent(getApplicationContext(),RegisterActivity.class);
-                startActivity(intent);
+                Fade fade = new Fade();
+                fade.setDuration(1000);
+                getWindow().setExitTransition(fade);
+                getWindow().setEnterTransition(fade);
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(LoginActivity.this).toBundle());
         });
     }
     public void goToMain(User user) {

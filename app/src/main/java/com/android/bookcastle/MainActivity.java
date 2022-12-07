@@ -10,12 +10,14 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.bookcastle.api.ApiClient;
@@ -130,7 +132,10 @@ public class MainActivity extends AppCompatActivity {
         builder = new MaterialAlertDialogBuilder(this);
         LayoutInflater inflater = getLayoutInflater();
         View view = inflater.inflate(R.layout.layout_bottom_sheet, null);
-        view.findViewById(R.id.close).setOnClickListener(v -> builder.create().dismiss());
+        //set username
+        TextView username2 = view.findViewById(R.id.username);
+        username2.setText(getSharedPreferences("login", MODE_PRIVATE).getString("username", "username"));
+        TextView usermail = view.findViewById(R.id.usermail);
         builder.setView(view);
         builder.show();
     }

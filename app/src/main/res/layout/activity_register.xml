@@ -1,116 +1,194 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".RegisterActivity">
+    tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/title"
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="BookCastle"
-        android:textAlignment="center"
-        android:textSize="50sp"
-        android:layout_marginStart="25dp"
-        android:layout_marginBottom="5dp"
-        android:fontFamily="@font/indigo_daisy"
-        android:layout_marginTop="60dp"/>
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="@font/poppins_sb"
+        android:text="@string/app_name"
+        android:textColor="@color/bg_dark"
+        android:textSize="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/subtitle"
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Let's join us"
-        android:textSize="17sp"
-        android:fontFamily="@font/roboto_regular"
-        android:layout_marginStart="25dp"
-        android:layout_marginBottom="50dp"/>
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/create_a_castle_from_bricks_and_books"
+        android:textSize="40px"
+        android:textColor="@color/bg_dark"
+        android:fontFamily="@font/poppins"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="211dp"
+        android:layout_height="146dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/login_illustration"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <EditText
         android:id="@+id/username"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="65dp"
+        android:layout_marginHorizontal="20dp"
+        android:background="@drawable/bg_txt_username"
+        android:fontFamily="@font/poppins"
         android:hint="Username"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="10dp"
-        android:padding="15dp"
-        android:inputType="textPersonName"
-        android:fontFamily="@font/roboto_regular"
-        android:background="@drawable/et_custom"
-        android:textSize="15sp" />
-
+        android:paddingLeft="60dp"
+        android:textColor="@color/bg_dark"
+        android:textSize="40px"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
     <EditText
         android:id="@+id/email"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:hint="Email"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="10dp"
-        android:padding="15dp"
-        android:fontFamily="@font/roboto_regular"
-        android:inputType="textEmailAddress"
-        android:background="@drawable/et_custom"
-        android:textSize="15sp" />
+        android:layout_height="65dp"
+        android:layout_marginHorizontal="20dp"
+        android:background="@drawable/bg_txt_mail"
+        android:fontFamily="@font/poppins"
+        android:hint="@string/email"
+        android:paddingLeft="60dp"
+        android:textColor="@color/bg_dark"
+        android:textSize="40px"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/username" />
 
     <EditText
         android:id="@+id/password"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:hint="Password"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="10dp"
-        android:padding="15dp"
-        android:fontFamily="@font/roboto_regular"
+        android:layout_height="65dp"
+        android:layout_marginHorizontal="20dp"
+        android:fontFamily="@font/poppins"
+        android:textSize="40px"
+        android:paddingLeft="60dp"
+        android:hint="@string/password"
+        android:textColor="@color/bg_dark"
         android:inputType="textPassword"
-        android:background="@drawable/et_custom"
-        android:textSize="15sp" />
-
+        android:background="@drawable/bg_txt_password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/email" />
     <EditText
-        android:id="@+id/repassword"
+        android:id="@+id/password_confirm"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:hint="Re_type_password"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:padding="15dp"
-        android:fontFamily="@font/roboto_regular"
+        android:layout_height="65dp"
+        android:layout_marginHorizontal="20dp"
+        android:fontFamily="@font/poppins"
+        android:textSize="40px"
+        android:paddingLeft="60dp"
+        android:hint="@string/confirm_your_password"
+        android:textColor="@color/bg_dark"
         android:inputType="textPassword"
-        android:background="@drawable/et_custom"
-        android:textSize="15sp"
-        />
+        android:background="@drawable/bg_txt_password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/password" />
 
-    <Button
-        android:id="@+id/btnRegister"
+    <TextView
+        android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/btn_custom"
-        android:fontFamily="@font/roboto_regular"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="30dp"
-        android:layout_centerInParent="true"
-        android:textColor="@android:color/white"
-        android:text="Register"
-        android:layout_marginTop="50dp"/>
+        android:fontFamily="@font/poppins"
+        android:text="@string/gender"
+        android:layout_marginTop="9dp"
+        android:textColor="@color/bg_dark"
+        android:textSize="18dp"
+        android:layout_marginStart="10dp"
+        app:layout_constraintStart_toStartOf="@+id/password_confirm"
+        app:layout_constraintTop_toBottomOf="@+id/password_confirm" />
 
-    <Button
-        android:id="@+id/btnLogin"
+    <RadioGroup
+        android:id="@+id/gender"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="30dp"
-        android:background="@drawable/btn_custom"
-        android:fontFamily="@font/roboto_regular"
-        android:text="Login"
-        android:textColor="@android:color/white" />
+        android:checkedButton="@+id/male_rb"
+        android:orientation="horizontal"
+        android:layout_marginStart="5dp"
+        app:layout_constraintStart_toEndOf="@+id/textView5"
+        app:layout_constraintTop_toBottomOf="@+id/password_confirm">
+
+        <RadioButton
+            android:id="@+id/male_rb"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Male"
+            app:buttonTint="@color/breaker"
+            />
+
+        <RadioButton
+            android:id="@+id/female_rb"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Female"
+            app:buttonTint="@color/breaker"
+            />
+
+    </RadioGroup>
 
 
-</LinearLayout>
+    <ImageButton
+        android:id="@+id/btn_register"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/btn_shape"
+        android:src="@drawable/arrow_right"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.976"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gender"
+        app:tint="@color/white" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:fontFamily="@font/poppins"
+        android:onClick="slideUp"
+        android:text="Sign up"
+        android:layout_marginTop="17dp"
+        android:textColor="@color/bg_dark"
+        android:textSize="48px"
+        app:layout_constraintEnd_toStartOf="@+id/btn_register"
+        app:layout_constraintTop_toBottomOf="@+id/gender" />
+
+    <ImageButton
+        android:id="@+id/btnBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:baselineAlignBottom="false"
+        android:src="@drawable/arrow_left"
+        app:backgroundTint="@color/white"
+        app:fabSize="mini"
+        app:layout_anchorGravity="start|bottom"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:rippleColor="@null" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

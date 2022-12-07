@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class UserDatabaseHelper extends SQLiteOpenHelper {
     // Database Info
     private static final String DATABASE_NAME = "BookCastleDB";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 3;
 
     // Table Names
     private static final String TABLE_USERS = "users";
@@ -28,6 +28,8 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
     private static final String KEY_USER_ID = "id";
     private static final String KEY_USER_NAME = "username";
     private static final String KEY_USER_PASSWORD = "password";
+    private static final String KEY_USER_EMAIL = "email";
+    private static final String KEY_USER_GENDER = "gender";
 
     // Saved Books Table Columns
     private static final String KEY_BOOK_ID = "id";
@@ -73,8 +75,10 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
         String CREATE_USERS_TABLE = "CREATE TABLE " + TABLE_USERS +
                 "(" +
                 KEY_USER_ID + " INTEGER PRIMARY KEY," + // Define a primary key
-                KEY_USER_NAME + " TEXT, " + // Define username
-                KEY_USER_PASSWORD + " TEXT" +
+                   KEY_USER_NAME + " TEXT," +
+                     KEY_USER_PASSWORD + " TEXT," +
+                    KEY_USER_EMAIL + " TEXT," +
+                KEY_USER_GENDER + " TEXT" +
                 ")";
 
         String CREATE_SAVED_BOOKS_TABLE = "CREATE TABLE " + TABLE_SAVED_BOOKS +
@@ -108,7 +112,6 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
     // Insert a user into the database
     public Boolean addUser(User user) {
         SQLiteDatabase db = getWritableDatabase();
-
         // It's a good idea to wrap our insert in a transaction. This helps with performance and ensures
         // consistency of the database.
         db.beginTransaction();
@@ -117,6 +120,8 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
             ContentValues values = new ContentValues();
             values.put(KEY_USER_NAME, user.getUsername());
             values.put(KEY_USER_PASSWORD, user.getPassword());
+            values.put(KEY_USER_EMAIL, user.getEmail());
+            values.put(KEY_USER_GENDER, user.getGender());
 
             // Notice how we haven't specified the primary key. SQLite auto increments the primary key column.
             db.insertOrThrow(TABLE_USERS, null, values);
@@ -300,4 +305,19 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
             return false;
         }
     }
+
+
+    @SuppressLint("Range")
+    public String getGender(String id) {
+        SQLiteDatabase db = getReadableDatabase();
+        //select only the gender column
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_USERS + " WHERE " + KEY_USER_NAME + " = ?", new String[]{id});
+        if(cursor.getCount() > 0){
+            cursor.moveToFirst();
+        return cursor.getString(cursor.getColumnIndex(KEY_USER_GENDER));
+        }else{
+            return null;
+        }
+    }
+
 }

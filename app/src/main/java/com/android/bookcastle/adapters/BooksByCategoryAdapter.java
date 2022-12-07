@@ -79,6 +79,11 @@ public class BooksByCategoryAdapter extends RecyclerView.Adapter<BooksByCategory
         return books.size();
     }
 
+    public void filterList(ArrayList<Book> filteredList) {
+        books = filteredList;
+        notifyDataSetChanged();
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView book_title, book_price,  book_author, book_pages;
         RatingBar book_rating;

@@ -3,29 +3,25 @@ package com.android.bookcastle.fragments;
 import static android.content.Context.MODE_PRIVATE;
 
 import android.app.SearchManager;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.database.MatrixCursor;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SearchView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.bookcastle.BookDetailActivity;
 import com.android.bookcastle.MainActivity;
 import com.android.bookcastle.R;
 import com.android.bookcastle.adapters.CategoryAdapter;
@@ -41,9 +37,9 @@ public class HomeFragment extends Fragment {
     private CategoryAdapter adapter;
     ArrayList<Category> categories;
     ArrayList <Book>  books;
-    SearchView search;
     ImageView user_profile;
     String username;
+    SearchView search;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -87,11 +83,14 @@ public class HomeFragment extends Fragment {
         //get the shared preferences
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("login", MODE_PRIVATE);
         this.username = sharedPreferences.getString("username", "");
+        if(sharedPreferences.getString("gender","") == "female"){
+            user_profile.setImageResource(R.drawable.ppf);
+        }
+
         username = username.substring(0, 1).toUpperCase() + username.substring(1);
         welcome_msg = view.findViewById(R.id.welcome_msg);
         welcome_msg.setText("Welcome back, " + username);
         recyclerView = getView().findViewById(R.id.parent_rv);
-        search = getView().findViewById(R.id.search);
         user_profile = getView().findViewById(R.id.user_profile);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -101,16 +100,6 @@ public class HomeFragment extends Fragment {
         categoryAdapter.notifyDataSetChanged();
         ((MainActivity) getActivity()).stopShimmer();
 
-        SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
-        search.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
-        search.setIconifiedByDefault(false);
-        //display a dialog when the user clicks on the search icon
-        search.setOnSearchClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((MainActivity) getActivity()).displaySearchDialog();
-            }
-        });
 
         user_profile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,6 +107,78 @@ public class HomeFragment extends Fragment {
                 ((MainActivity) getActivity()).displayUserProfile();
             }
         });
+        configureSearchView();
+
     }
+
+    private void configureSearchView() {
+        ArrayList<Book> books = new ArrayList<>();
+        categories.stream().forEach(category -> {
+            books.addAll(category.getBooks());
+        });
+
+        search = getView().findViewById(R.id.search);
+        search.setQueryHint("Search for a book");
+        String[] projections = new String[]{"_id", "title", "author"};
+        MatrixCursor cursor = new MatrixCursor(projections);
+        books.stream().forEach(book -> {
+            cursor.addRow(new Object[]{book.getId(), book.getTitle(), book.getAuthor()});
+        });
+
+        String[] from = new String[]{"title", "author"};
+        int[] to = new int[]{R.id.text1, R.id.text2};
+        SimpleCursorAdapter adapter = new SimpleCursorAdapter(getContext(),  R.layout.search_item, cursor, from, to, 0);
+        search.setSuggestionsAdapter(adapter);
+
+        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Toast.makeText(getContext(), "Searching for " + query, Toast.LENGTH_SHORT).show();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if(newText.length() > 0){
+                    ArrayList<Book> onChangeBooks = new ArrayList<>();
+                    books.stream().forEach(book -> {
+                        if(book.getTitle().toLowerCase().contains(newText.toLowerCase())){
+                            onChangeBooks.add(book);
+                        }
+                    });
+                    MatrixCursor cursor1 = new MatrixCursor(projections);
+                    onChangeBooks.stream().forEach(book -> {
+                        cursor1.addRow(new Object[]{book.getId(), book.getTitle(), book.getAuthor()});
+                    });
+                    search.setSuggestionsAdapter(new SimpleCursorAdapter(getContext(),  R.layout.search_item, cursor1, from, to, 0));
+                }
+                return false;
+            }
+
+        });
+
+
+
+
+        search.setOnSuggestionListener(new SearchView.OnSuggestionListener() {
+            @Override
+            public boolean onSuggestionSelect(int position) {
+                return false;
+            }
+
+            @Override
+            public boolean onSuggestionClick(int position) {
+                Intent intent = new Intent(getContext(), BookDetailActivity.class);
+                intent.putExtra("book", books.get(position));
+                startActivity(intent);
+                return false;
+            }
+        });
+
+
+
+
+    }
+
 
 }

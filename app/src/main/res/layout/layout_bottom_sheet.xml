@@ -18,24 +18,15 @@
         android:padding="15dp"
         android:fontFamily="@font/poppins"
         android:text="@string/reader_s_profile"
-        android:textColor="@color/breaker"
+        android:textColor="@color/df_transparent_black_background"
         android:textSize="18sp"
         android:textStyle="bold" />
-    <ImageButton
-        android:id="@+id/close"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:onClick="closeBottomSheet"
-        android:padding="10dp"
-        android:background="@color/transparent"
-        android:src="@drawable/ic_baseline_close_24" />
     </LinearLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginBottom="10dp"
-        android:background="@color/df_transparent_black_background" />
+        android:background="#54000000" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -56,6 +47,7 @@
             android:gravity="center_vertical"
             android:orientation="vertical">
             <TextView
+                android:id="@+id/username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimaryDark"
@@ -64,7 +56,7 @@
                 android:fontFamily="@font/poppins"
                 />
             <TextView
-                android:id="@+id/user_email"
+                android:id="@+id/usermail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/df_transparent_black_background"
@@ -85,7 +77,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="10dp"
-        android:background="@color/df_transparent_black_background" />
+        android:background="#54000000" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -135,7 +127,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="10dp"
-        android:background="@color/df_transparent_black_background" />
+        android:background="#54000000" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -148,63 +140,26 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="vertical">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginHorizontal="10dp">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_favorite"
-
-                    android:scaleType="centerCrop"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="17sp"
-                android:textStyle="bold"
-                android:fontFamily="@font/poppins"
-                android:layout_marginStart="10dp"
-                android:text="@string/favourite_books" />
-
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginHorizontal="10dp">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_baseline_alarm_on_24"
-                    android:scaleType="centerCrop"/>
-            <TextView
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="17sp"
-                android:text="@string/settings_2"
-                android:fontFamily="@font/poppins"
-                />
-            </LinearLayout>
+                android:layout_marginHorizontal="10dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginHorizontal="10dp">
+                android:layout_marginHorizontal="20dp">
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_baseline_alarm_on_24"
+                    android:src="@drawable/ic_baseline_help"
                     android:scaleType="centerCrop"/>
             <TextView
                 android:layout_width="match_parent"
+                android:layout_marginLeft="10dp"
                 android:layout_height="wrap_content"
                 android:textColor="@color/df_transparent_black_background"
                 android:textSize="17sp"

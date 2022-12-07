@@ -3,6 +3,7 @@ package com.android.bookcastle.fragments;
 import android.app.Activity;
 import android.os.Bundle;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.bookcastle.MainActivity;
 import com.android.bookcastle.R;
@@ -40,6 +42,8 @@ public class BookmarkFragment extends Fragment {
     FloatingActionButton btn_back;
     ArrayList<Book> books;
     TextView bookmark_empty;
+    SearchView mSearchView;
+
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -84,11 +88,11 @@ public class BookmarkFragment extends Fragment {
         DB = UserDatabaseHelper.getInstance(getContext());
         books = DB.getAllBooks();
 
-
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_bookmark, container, false);
         bookmarks_rv = view.findViewById(R.id.bookmarks_rv);
         bookmark_empty = view.findViewById(R.id.bookmark_empty);
+        mSearchView = view.findViewById(R.id.searchView);
         if(books.size() == 0) {
             bookmark_empty.setVisibility(View.VISIBLE);
         }
@@ -106,14 +110,44 @@ public class BookmarkFragment extends Fragment {
                 ((MainActivity) getActivity()).replaceFragment(new HomeFragment());
             }
         });
+        mSearchView.clearFocus();
+        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterList(newText);
+                return false;
+            }
+        });
 
         return view;
+    }
+
+    private void filterList(String newText) {
+        ArrayList<Book> filteredList = new ArrayList<>();
+        for (Book book : books) {
+            if (book.getTitle().toLowerCase().contains(newText.toLowerCase())) {
+                filteredList.add(book);
+            }
+        }
+        if (filteredList.size() == 0) {
+            Toast.makeText(getContext(), "No book found", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            BookmarkAdapter adapter = new BookmarkAdapter(filteredList, getContext());
+            bookmarks_rv.setAdapter(adapter);
+            bookmarks_rv.setLayoutManager(new LinearLayoutManager(getContext()));
+        }
     }
 
 
     @Override
     public void onResume() {
         super.onResume();
+        DB = UserDatabaseHelper.getInstance(getContext());
         books = DB.getAllBooks();
         BookmarkAdapter adapter = new BookmarkAdapter(DB.getAllBooks(), getContext());
         bookmarks_rv.setAdapter(adapter);
