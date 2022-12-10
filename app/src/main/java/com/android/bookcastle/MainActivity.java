@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
         View view = inflater.inflate(R.layout.layout_bottom_sheet, null);
         //set username
         TextView username2 = view.findViewById(R.id.username);
-        username2.setText(getSharedPreferences("login", MODE_PRIVATE).getString("username", "username"));
+        username2.setText(getSharedPreferences("login", MODE_PRIVATE).getString("username", "username").substring(0, 1).toUpperCase() + getSharedPreferences("login", MODE_PRIVATE).getString("username", "username").substring(1));
         TextView usermail = view.findViewById(R.id.usermail);
         builder.setView(view);
         builder.show();

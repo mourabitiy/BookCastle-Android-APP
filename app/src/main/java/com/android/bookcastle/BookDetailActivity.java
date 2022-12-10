@@ -1,54 +1,33 @@
 package com.android.bookcastle;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.palette.graphics.Palette;
-
+import android.app.DownloadManager;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.DisplayMetrics;
-import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.android.bookcastle.api.ApiClient;
 import com.android.bookcastle.factories.BookFactory;
 import com.android.bookcastle.fragments.BookmarkFragment;
-import com.android.bookcastle.fragments.HomeFragment;
 import com.android.bookcastle.models.Book;
-import com.android.bookcastle.models.Category;
-import com.android.bookcastle.models.User;
-import com.android.bookcastle.utils.ECategories;
-import com.android.bookcastle.utils.PaletteUtils;
+import com.android.bookcastle.utils.LoadingDialog;
 import com.android.bookcastle.utils.UserDatabaseHelper;
 import com.bumptech.glide.Glide;
-import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.IOException;
-import java.util.List;
 
 public class BookDetailActivity extends AppCompatActivity {
     TextView book_title, book_author, book_desc;
     ImageView book_cover;
-    Button btn_read;
+    Button btn_read, btn_download;
     FloatingActionButton btn_back;
     TextView book_language;
     TextView read_count;
@@ -61,6 +40,7 @@ public class BookDetailActivity extends AppCompatActivity {
     UserDatabaseHelper DB;
     boolean isFav;
     Book book;
+    LoadingDialog loadingDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Intent intent = getIntent();
@@ -78,6 +58,7 @@ public class BookDetailActivity extends AppCompatActivity {
         book_rating = findViewById(R.id.book_rating);
         btn_back = findViewById(R.id.btn_back);
         book_cover = findViewById(R.id.book_cover);
+        btn_download = findViewById(R.id.btn_download);
         read_count = findViewById(R.id.read_count);
         pages = findViewById(R.id.pages);
         book_title.setText(book.getTitle());
@@ -89,15 +70,44 @@ public class BookDetailActivity extends AppCompatActivity {
         book_description.setText(book.getDescription());
         book_rating.setRating((float) book.getRating());
 
+        if(book.getDownload_url() == null){
+            //disable download button
+            btn_download.setEnabled(false);
+Drawable drawable = btn_download.getBackground();
+            drawable = DrawableCompat.wrap(drawable);
+            DrawableCompat.setTint(drawable, ContextCompat.getColor(this, R.color.df_transparent_black_background));
+            btn_download.setBackground(drawable);
+            //change text
+            btn_download.setText("Download Not Available");
+        }
 
         btn_back.setOnClickListener(v -> {
             onBackPressed();
+            if(loadingDialog != null){
+                loadingDialog.dismissDialog();
+            }
 
         });
         btn_read.setOnClickListener(v -> {
-            mBookFactory = new BookFactory();
-            GetBookContent selectedBook = new GetBookContent(book.getId());
-            selectedBook.execute();
+             loadingDialog = new LoadingDialog(BookDetailActivity.this);
+            loadingDialog.startLoadingDialog();
+            if(book.getContent() == null) {
+                mBookFactory = new BookFactory();
+                GetBookContent selectedBook = new GetBookContent(book.getId());
+                selectedBook.execute();
+            }
+            else{
+                showContent(book);
+            }
+        });
+        btn_download.setOnClickListener(v -> {
+           Snackbar.make(v, "Download Started", Snackbar.LENGTH_SHORT).show();
+            DownloadManager downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
+            Uri uri = Uri.parse(book.getDownload_url());
+            DownloadManager.Request request = new DownloadManager.Request(uri);
+            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+            request.setTitle(book.getTitle());
+            downloadManager.enqueue(request);
         });
 
         if(isFav){
@@ -129,6 +139,7 @@ public class BookDetailActivity extends AppCompatActivity {
             this.id = id;
         }
 
+
         @Override
         protected String doInBackground(Void... voids) {
             String content = null;
@@ -143,16 +154,16 @@ public class BookDetailActivity extends AppCompatActivity {
         protected void onPostExecute(String content) {
             super.onPostExecute(content);
             book.setContent(content);
-
-           showContent();
+            loadingDialog.dismissDialog();
+            showContent(book);
 
 
         }
     }
 
-    private void showContent() {
+    private void showContent(Book loadedBook) {
         Intent intent1 = new Intent(BookDetailActivity.this, ReadBookActivity.class);
-        intent1.putExtra("book", book);
+        intent1.putExtra("book", loadedBook);
         startActivity(intent1);
     }
 

@@ -90,7 +90,9 @@ public class ApiClient {
                 }
                 book.setLanguage(language.toUpperCase());
                 book.setDescription("Dummy Description");
-                //get download_count int value
+//                if(formats.getString("text/plain; charset=utf-8") != null) {
+//                    book.setDownload_url(formats.getString("text/plain; charset=utf-8"));
+//                }
                 book.setDownload_count(bookObject.getInt("download_count"));
                 //Set a random rating from 1 to 5
                 book.setRating(Math.random() * 5);

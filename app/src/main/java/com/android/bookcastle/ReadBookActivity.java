@@ -9,11 +9,13 @@ import android.widget.TextView;
 import com.android.bookcastle.models.Book;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.slider.Slider;
 
 public class ReadBookActivity extends AppCompatActivity {
 
     FloatingActionButton btn_back;
     TextView book_title, book_author, book_content;
+    Slider slider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +26,7 @@ public class ReadBookActivity extends AppCompatActivity {
         book_title = findViewById(R.id.book_title);
         book_author = findViewById(R.id.book_author);
         book_content = findViewById(R.id.book_content);
+        slider = findViewById(R.id.slider);
 
         Intent intent = getIntent();
         Book book = (Book) intent.getSerializableExtra("book");
@@ -37,7 +40,17 @@ public class ReadBookActivity extends AppCompatActivity {
 
     btn_back.setOnClickListener(v -> {
              onBackPressed();
+
         });
+    //change slider range
+    slider.setValueFrom(18);
+    slider.setValue(18);
+    slider.setValueTo(40);
+
+    //bind the slider to the textview
+    slider.addOnChangeListener((slider, value, fromUser) -> {
+        book_content.setTextSize(value);
+    });
     }
 
 

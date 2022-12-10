@@ -52,4 +52,5 @@
     <string name="create_a_castle_from_bricks_and_books">Create a castle from bricks and books</string>
     <string name="i_confirm_that_i_have_read_and_accepted_the_terms_of_use_and_privacy_policy">I confirm that I have read and accepted the Terms of Use and Privacy Policy</string>
     <string name="search_book">Search for a book</string>
+    <string name="please_wait">Please wait</string>
 </resources>

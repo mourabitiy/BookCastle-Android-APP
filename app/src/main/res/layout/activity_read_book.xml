@@ -95,6 +95,7 @@
 
     </LinearLayout>
 
+
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="414dp"
@@ -113,6 +114,9 @@
             android:layout_marginTop="50dp"
             android:layout_marginRight="20dp"
             android:fontFamily="@font/poppins"
+            android:gravity="left"
+            android:textSize="18sp"
+            android:textAlignment="gravity"
             android:text="Lorem ipsum dolor sit amet, consectetur aretfdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddfetfrtdfgkersdfygkvredlfkjyhbkjltrfjlkcgjklbytklfcgkjlbyfgchkjlfcjzq'erdjkyhjlkbvtrjdxtjlkgbtjklfcgkjvkjlreddfjbgfckjlhkjgyckjlgbkjlytgjkvhjbkvtrjkfgvlkjhb jkldjlkfcghbktjlfkxjklcgbkjlygkjcvkjblgkjgfhbkjljgchjnjghvjklhbjklygjklvhbjfhgbljyghnbgkjlvfjsdgvbfgjlchbjkghvjklbjklcgfvjkl hbkjlgkhjtjklfghbdipiscing elit. Donec auctor, nisl eget ultricies lacinia, nisl nunc aliquet nisl, eget aliquet nunc nisl eget nisl. Donec auctor, nisl eget ultricies lacinia, nisl nunc aliquet nisl, eget aliquet nunc nisl eget nisl. Donec auctor, nisl eget ultricies lacinia, nisl nunc aliquet nisl, eget aliquet nunc nisl eget nisl. Donec auctor, nisl eget ultricies lacinia, nisl nunc aliquet nisl, eget aliquet nunc nisl eget nisl. Donec auctor, nisl eget ultricies lacinia, nisl nunc aliquet nisl, eget aliquet nunc nisl eget nisl. Donec auctor, nisl eget ultricies lacinia, nisl nunc aliquet nisl, eget aliquet nunc nisl eget nisl. Donec auctor, nisl eget ultricies lacinia, nisl nunc aliquet nisl, eget aliquet nunc nisl eget nisl. Donec auctor, nisl eget ultricies lacinia, nisl nunc aliquet nisl, eget aliquet nunc nisl eget nisl. Donec auctor, nisl eget ultricies lacinia, nisl nunc aliquet nisl, eget aliquet nunc nisl eget nisl. Donec auctor, nisl eget ultricies lacinia, nisl nunc aliquet nisl, eget aliquet nunc nisl eget nisl. Donec auctor, nisl eget ultricies lacinia, nisl nunc aliquet nisl, eget aliquet nunc nisl eget nisl. Donec auctor, nisl eget ultricies " />
     </ScrollView>
 
@@ -143,6 +147,7 @@
                 android:textStyle="bold" />
 
             <com.google.android.material.slider.Slider
+                android:id="@+id/slider"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
