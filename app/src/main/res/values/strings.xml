@@ -53,4 +53,9 @@
     <string name="i_confirm_that_i_have_read_and_accepted_the_terms_of_use_and_privacy_policy">I confirm that I have read and accepted the Terms of Use and Privacy Policy</string>
     <string name="search_book">Search for a book</string>
     <string name="please_wait">Please wait</string>
+    <string name="make_sure_you_remember_your_password">Make sure you remember your password</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="your_new_password">Your new password</string>
+    <string name="your_current_password">Your current password</string>
+    <string name="change_password">Change Password</string>
 </resources>

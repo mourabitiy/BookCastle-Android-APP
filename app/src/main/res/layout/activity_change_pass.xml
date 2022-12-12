@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ChangePassActivity">
+
+    <ImageView
+        android:id="@+id/back_btn"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentLeft="true"
+        android:layout_margin="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:src="@drawable/arrow_left" />
+
+    <ImageView
+        android:id="@+id/lockImg"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:layout_marginTop="160dp"
+        android:src="@drawable/ic_lock" />
+
+    <TextView
+        android:id="@+id/txtRem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lockImg"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/poppins"
+        android:text="@string/make_sure_you_remember_your_password"
+        android:textColor="@color/black"
+        android:layout_centerHorizontal="true"
+        android:textSize="18dp" />
+    <EditText
+        android:id="@+id/oldPass"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="@string/your_current_password"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:padding="15dp"
+        android:inputType="textPassword"
+        android:fontFamily="@font/roboto_regular"
+        android:layout_below="@id/txtRem"
+        android:background="@drawable/et_custom"
+        android:textSize="15sp"
+        android:layout_marginTop="30dp"/>
+
+    <EditText
+        android:id="@+id/newPass"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="@string/your_new_password"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:padding="15dp"
+        android:inputType="textPassword"
+        android:fontFamily="@font/roboto_regular"
+        android:layout_below="@id/oldPass"
+        android:background="@drawable/et_custom"
+        android:textSize="15sp"
+        android:layout_marginTop="20dp"/>
+    <EditText
+        android:id="@+id/confirmPass"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="@string/confirm_your_password"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:padding="15dp"
+        android:inputType="textPassword"
+        android:fontFamily="@font/roboto_regular"
+        android:layout_below="@id/newPass"
+        android:background="@drawable/et_custom"
+        android:textSize="15sp"
+        android:layout_marginTop="30dp"/>
+    <Button
+        android:id="@+id/ConfirmPassBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/confirmPass"
+        android:background="@drawable/btn_custom"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="15dp"
+        android:fontFamily="@font/roboto_regular"
+        android:textColor="@android:color/white"
+        android:text="@string/change_password"/>
+
+
+</RelativeLayout>

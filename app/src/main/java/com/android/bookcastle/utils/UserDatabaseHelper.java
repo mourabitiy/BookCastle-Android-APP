@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class UserDatabaseHelper extends SQLiteOpenHelper {
     // Database Info
     private static final String DATABASE_NAME = "BookCastleDB";
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 5;
 
     // Table Names
     private static final String TABLE_USERS = "users";
@@ -30,6 +30,7 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
     private static final String KEY_USER_PASSWORD = "password";
     private static final String KEY_USER_EMAIL = "email";
     private static final String KEY_USER_GENDER = "gender";
+    private static final String KEY_USER_DAILY_READING_GOAL = "daily_reading_goal";
 
     // Saved Books Table Columns
     private static final String KEY_BOOK_ID = "id";
@@ -78,7 +79,8 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
                    KEY_USER_NAME + " TEXT," +
                      KEY_USER_PASSWORD + " TEXT," +
                     KEY_USER_EMAIL + " TEXT," +
-                KEY_USER_GENDER + " TEXT" +
+                KEY_USER_GENDER + " TEXT," +
+                KEY_USER_DAILY_READING_GOAL + " INTEGER" +
                 ")";
 
         String CREATE_SAVED_BOOKS_TABLE = "CREATE TABLE " + TABLE_SAVED_BOOKS +
@@ -320,4 +322,66 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    @SuppressLint("Range")
+    public String getUserId(String username, String password) {
+           SQLiteDatabase db = getReadableDatabase();
+              Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_USERS + " WHERE " + KEY_USER_NAME + " = ? AND " + KEY_USER_PASSWORD + " = ?", new String[]{username,password});
+                if(cursor.getCount() > 0){
+                    cursor.moveToFirst();
+                    return cursor.getString(cursor.getColumnIndex(KEY_USER_ID));
+                }else{
+                    return null;
+                }
+    }
+
+    @SuppressLint("Range")
+    public User getUserById(String id) {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_USERS + " WHERE " + KEY_USER_ID + " = ?", new String[]{id});
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            User user = new User();
+            user.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_USER_ID))));
+            user.setUsername(cursor.getString(cursor.getColumnIndex(KEY_USER_NAME)));
+            user.setEmail(cursor.getString(cursor.getColumnIndex(KEY_USER_EMAIL)));
+            user.setGender(cursor.getString(cursor.getColumnIndex(KEY_USER_GENDER)));
+            user.setDailyReadingGoal(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_USER_DAILY_READING_GOAL))));
+            return user;
+        }
+        return null;
+    }
+
+
+    public Boolean checkPass(String id, String oldPassword) {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_USERS + " WHERE " + KEY_USER_ID + " = ? AND " + KEY_USER_PASSWORD + " = ?", new String[]{id,oldPassword});
+        if(cursor.getCount() > 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public Boolean updatePass(String id, String newPassword) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(KEY_USER_PASSWORD, newPassword);
+        db.update(TABLE_USERS, contentValues, KEY_USER_ID + " = ?", new String[]{id});
+        return true;
+    }
+
+    public void updateReadingGoal(long timeSpend) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();
+        try {
+            ContentValues values = new ContentValues();
+            values.put(KEY_USER_DAILY_READING_GOAL, timeSpend);
+            db.update(TABLE_USERS, values, KEY_USER_ID + " = ?", new String[]{String.valueOf(1)});
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.d(TAG, "Error while trying to update reading goal");
+        } finally {
+            db.endTransaction();
+        }
+    }
 }

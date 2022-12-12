@@ -65,6 +65,9 @@ public class LoginActivity extends AppCompatActivity {
                     Boolean checkUserPass = DB.checkPassword(user,pass);
                     if(checkUserPass == true){
                         SharedPreferences.Editor editor = sharedPreferences.edit();
+                        //get userid from database
+                        String id = DB.getUserId(user, pass);
+                        editor.putString("user_id", id);
                         editor.putBoolean("logged", true);
                         editor.putString("username", user);
                         editor.putString("password", pass);

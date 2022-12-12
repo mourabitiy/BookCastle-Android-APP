@@ -3,8 +3,11 @@ package com.android.bookcastle.fragments;
 import android.app.Activity;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -102,14 +105,20 @@ public class BookmarkFragment extends Fragment {
             bookmarks_rv.setLayoutManager(new LinearLayoutManager(getContext()));
             btn_back = view.findViewById(R.id.back_btn);
         }
-        btn_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //go back to home fragment
-                //call the replace fragment method of the main activity
-                ((MainActivity) getActivity()).replaceFragment(new HomeFragment());
-            }
-        });
+        if(btn_back != null) {
+            btn_back.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((MainActivity) getActivity()).replaceFragment(new HomeFragment());
+                    FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.frameLayout, new HomeFragment());
+                    fragmentTransaction.commit();
+                    MainActivity.getNavigation().setSelectedItemId(R.id.nav_home);
+                }
+            });
+        }
+
+
         mSearchView.clearFocus();
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -143,6 +152,21 @@ public class BookmarkFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        btn_back = view.findViewById(R.id.back_btn);
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity) getActivity()).replaceFragment(new HomeFragment());
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.frameLayout, new HomeFragment());
+                fragmentTransaction.commit();
+                MainActivity.getNavigation().setSelectedItemId(R.id.nav_home);
+            }
+        });
+    }
 
     @Override
     public void onResume() {

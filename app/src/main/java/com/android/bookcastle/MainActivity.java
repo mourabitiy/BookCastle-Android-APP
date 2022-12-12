@@ -3,6 +3,7 @@ package com.android.bookcastle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -17,6 +18,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,11 +31,16 @@ import com.android.bookcastle.fragments.HomeFragment;
 import com.android.bookcastle.fragments.SettingsFragment;
 import com.android.bookcastle.models.Book;
 import com.android.bookcastle.models.Category;
+import com.android.bookcastle.models.User;
 import com.android.bookcastle.utils.Common;
 import com.android.bookcastle.utils.ECategories;
 import com.android.bookcastle.utils.NetworkChangeListener;
+import com.android.bookcastle.utils.UserDatabaseHelper;
 import com.facebook.shimmer.ShimmerFrameLayout;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.navigation.NavigationBarView;
+import com.google.android.material.progressindicator.LinearProgressIndicator;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -51,7 +58,12 @@ public class MainActivity extends AppCompatActivity {
     NetworkChangeListener networkChangeListener = new NetworkChangeListener();
     private ShimmerFrameLayout shimmerFrameLayout;
     MaterialAlertDialogBuilder builder;
+    UserDatabaseHelper DB;
+    private static BottomNavigationView bottomNavigationView;
 
+    public static BottomNavigationView getNavigation() {
+        return bottomNavigationView;
+    }
 
 
     @Override
@@ -59,10 +71,11 @@ public class MainActivity extends AppCompatActivity {
         //Binding the layout with the activity
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
-
+        DB = UserDatabaseHelper.getInstance(this);
         setContentView(binding.getRoot());
             categories = new ArrayList<>();
         bookFactory = new BookFactory();
+        bottomNavigationView = findViewById(R.id.bottomNavigation);
         hideBottomNavigation();
         shimmerFrameLayout = findViewById(R.id.shimmerLayout);
         shimmerFrameLayout.startShimmer();
@@ -105,16 +118,11 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.frameLayout, fragment);
         fragmentTransaction.commit();
     }
-    //replace fragment but with tag
 
     public ArrayList<Category> getCategories() {
         return categories;
     }
 
-    public void displaySearchDialog() {
-        SearchDialog searchDialog = new SearchDialog();
-        searchDialog.show(getSupportFragmentManager(), "Search Dialog");
-    }
 
     public void setSearch(String search) {
         Intent intent = new Intent("search");
@@ -129,15 +137,31 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void displayUserProfile() {
+        //get user_id from shared preferences
+        SharedPreferences sharedPreferences = getSharedPreferences("login", MODE_PRIVATE);
+        String user_id = sharedPreferences.getString("user_id", "");
+        User loggedUser = DB.getUserById(user_id);
+
         builder = new MaterialAlertDialogBuilder(this);
         LayoutInflater inflater = getLayoutInflater();
         View view = inflater.inflate(R.layout.layout_bottom_sheet, null);
-        //set username
         TextView username2 = view.findViewById(R.id.username);
-        username2.setText(getSharedPreferences("login", MODE_PRIVATE).getString("username", "username").substring(0, 1).toUpperCase() + getSharedPreferences("login", MODE_PRIVATE).getString("username", "username").substring(1));
         TextView usermail = view.findViewById(R.id.usermail);
+        LinearProgressIndicator progressindicator = view.findViewById(R.id.progress_bar);
+        TextView progress = view.findViewById(R.id.progress_text);
+        Button settings_btn = view.findViewById(R.id.settings_btn);
+        username2.setText(loggedUser.getUsername().substring(0, 1).toUpperCase() + loggedUser.getUsername().substring(1));
+        usermail.setText(loggedUser.getEmail());
+       //progressindicator.setProgress(loggedUser.getDailyReadingGoal());
+        //progress.setText("You have read " + loggedUser.getDailyReadingGoal() + "mn today");
+
         builder.setView(view);
-        builder.show();
+        AlertDialog dialog = builder.show();
+        settings_btn.setOnClickListener(v -> {
+            replaceFragment(new SettingsFragment());
+            dialog.dismiss();
+        });
+
     }
 
 

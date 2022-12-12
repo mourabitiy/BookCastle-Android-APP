@@ -26,8 +26,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Username"
-                android:textColor="#4058A4"
+                android:text="User Account"
+                android:textColor="@color/breaker"
                 android:textSize="20dp"
                 android:layout_marginTop="8dp"
                 android:textStyle="bold"
@@ -36,7 +36,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#4058A4"
+                android:background="@color/breaker"
                 android:layout_marginTop="8dp"
                 />
 
@@ -66,6 +66,7 @@
                 android:layout_marginLeft="5dp" />
 
             <TextView
+                android:id="@+id/tvName"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="25dp"
@@ -110,6 +111,7 @@
                 android:layout_marginLeft="10dp" />
 
             <TextView
+                android:id="@+id/tvEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="daizesamia@gmail.com"
@@ -121,19 +123,21 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#4058A4"
+            android:background="@color/breaker"
             android:paddingRight="8dp"
             android:paddingLeft="8dp"
             android:layout_marginTop="26dp"
             />
         <LinearLayout
+            android:id="@+id/favorites"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:layout_marginTop="15dp"
-            android:layout_gravity="center_vertical">
+            android:layout_gravity="center_vertical"
+            android:paddingVertical="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -166,7 +170,8 @@
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:layout_marginTop="15dp"
-            android:layout_gravity="center_vertical">
+            android:layout_gravity="center_vertical"
+            android:paddingVertical="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -193,38 +198,13 @@
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:layout_marginTop="15dp"
-            android:layout_gravity="center_vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Epingle"
-                android:textColor="@color/black"
-                android:textSize="18dp"
-                android:layout_marginLeft="3dp" />
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="25dp"
-                android:src="@drawable/ic_navigate"
-                android:layout_marginLeft="280dp"
-                />
-
-        </LinearLayout>
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#4058A4"
+            android:background="@color/breaker"
             android:paddingRight="8dp"
             android:paddingLeft="8dp"
-            android:layout_marginTop="26dp"
             />
 
 
@@ -233,7 +213,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="70dp"
+            android:layout_marginTop="20dp"
             android:layout_marginLeft="90dp"
             android:orientation="vertical"
             android:gravity="center_horizontal">
@@ -242,9 +222,9 @@
                 android:layout_width="180dp"
                 android:layout_height="50dp"
                 android:background="@drawable/bg_btn"
-                android:text="Edit Profile"
+                android:text="@string/edit_profile"
                 android:gravity="center"
-                android:textColor="#4058A4"
+                android:textColor="@color/breaker"
                 android:textSize="18dp"
                 android:drawableLeft="@drawable/ic_edit"
                 android:paddingLeft="20dp"
@@ -254,17 +234,18 @@
                 />
 
             <TextView
+                android:id="@+id/change_password"
                 android:layout_width="200dp"
                 android:layout_height="50dp"
-                android:background="@drawable/bg_btn"
-                android:text="Change Password"
-                android:gravity="center"
-                android:textColor="#4058A4"
-                android:textSize="18dp"
-                android:drawableLeft="@drawable/ic_lock"
-                android:paddingLeft="10dp"
-
                 android:layout_marginTop="15dp"
+                android:background="@drawable/bg_btn"
+                android:drawableLeft="@drawable/ic_lock"
+                android:gravity="center"
+                android:paddingLeft="10dp"
+                android:text="Change Password"
+                android:textColor="@color/breaker"
+
+                android:textSize="18dp"
 
                 />
 

@@ -8,6 +8,7 @@ public class User implements Serializable {
     private String password;
     private String email;
     private String gender;
+    private int dailyReadingGoal;
 
     public User() {
     }
@@ -63,5 +64,13 @@ public class User implements Serializable {
 
     public String getGender(){
         return this.gender;
+    }
+
+    public int getDailyReadingGoal() {
+        return dailyReadingGoal;
+    }
+
+    public void setDailyReadingGoal(int dailyReadingGoal) {
+        this.dailyReadingGoal = dailyReadingGoal;
     }
 }

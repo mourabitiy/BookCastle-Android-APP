@@ -1,14 +1,27 @@
 package com.android.bookcastle.fragments;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.media.Image;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.android.bookcastle.ChangePassActivity;
+import com.android.bookcastle.GetstartedActivity;
+import com.android.bookcastle.MainActivity;
 import com.android.bookcastle.R;
+import com.android.bookcastle.models.User;
+import com.android.bookcastle.utils.UserDatabaseHelper;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +38,11 @@ public class SettingsFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    TextView change_password, tvName, tvEmail;
+    ImageView back_btn2;
+    UserDatabaseHelper DB;
+    LinearLayout favorites;
+    Button logout_btn;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -60,7 +78,61 @@ public class SettingsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_settings, container, false);
+        DB = UserDatabaseHelper.getInstance(getContext());
+        View view = inflater.inflate(R.layout.fragment_settings, container, false);
+        change_password = view.findViewById(R.id.change_password);
+        logout_btn = view.findViewById(R.id.logout_btn);
+        tvName = view.findViewById(R.id.tvName);
+        tvEmail = view.findViewById(R.id.tvEmail);
+        back_btn2 = view.findViewById(R.id.back_btn2);
+        back_btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //go back to main activity
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.frameLayout, new HomeFragment());
+                fragmentTransaction.commit();
+                MainActivity.getNavigation().setSelectedItemId(R.id.nav_home);
+    }
+        });
+        change_password.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), ChangePassActivity.class);
+                startActivity(intent);
+            }
+        });
+        favorites = view.findViewById(R.id.favorites);
+        favorites.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, new BookmarkFragment()).commit();
+            }
+        });
+
+        logout_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //clear all shared preferences
+                SharedPreferences sharedPreferences = getContext().getSharedPreferences("login", getContext().MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.clear();
+                editor.apply();
+                //load login activity
+                Intent intent = new Intent(getContext(), GetstartedActivity.class);
+            }
+        });
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("login", getActivity().MODE_PRIVATE);
+        String id = sharedPreferences.getString("user_id", "");
+        User user = new User();
+        user = DB.getUserById(id);
+        if (user != null) {
+            tvName.setText(user.getUsername());
+            tvEmail.setText(user.getEmail());
+        }
+
+
+        return view;
+
     }
 }

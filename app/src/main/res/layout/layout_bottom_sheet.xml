@@ -65,6 +65,7 @@
                 android:fontFamily="@font/poppins"
                 />
             <Button
+                android:id="@+id/settings_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/transparent_bg_bordered_button"
@@ -104,16 +105,18 @@
                 android:fontFamily="@font/poppins"
                 android:text="@string/daily_goal" />
             <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/progress_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="20dp"
                 android:min="0"
-                android:max="100"
+                android:max="120"
                 android:progress="30"
                 app:indicatorColor="@color/breaker"
                 android:paddingTop="10dp"/>
 
             <TextView
+                android:id="@+id/progress_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/df_transparent_black_background"
