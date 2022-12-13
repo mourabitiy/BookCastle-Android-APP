@@ -23,6 +23,7 @@ public class RegisterActivity extends AppCompatActivity {
     ImageButton btnRegister;
     ImageButton btnBack;
     RadioGroup gender;
+    RadioButton selectedGender;
 
     UserDatabaseHelper DB;
     @Override
@@ -46,14 +47,16 @@ public class RegisterActivity extends AppCompatActivity {
                 String pass = password.getText().toString();
                 String repass = repassword.getText().toString();
                 String mail = email.getText().toString();
-                //get the radio button selected
-                gender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(RadioGroup group, int checkedId) {
-                        RadioButton radioButton = findViewById(checkedId);
-                        user1.setGender(radioButton.getText().toString());
-                    }
-                });
+                int selectedRadioButtonId = gender.getCheckedRadioButtonId();
+                if(selectedRadioButtonId != -1){
+                    selectedGender = findViewById(selectedRadioButtonId);
+                }
+                if(selectedGender.getText().toString().equals("Male")){
+                    user1.setGender("male");
+                }
+                else{
+                    user1.setGender("female");
+                }
 
                 user1.setUsername(username);
                 user1.setPassword(pass);

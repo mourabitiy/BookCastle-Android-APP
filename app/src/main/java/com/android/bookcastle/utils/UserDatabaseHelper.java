@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class UserDatabaseHelper extends SQLiteOpenHelper {
     // Database Info
     private static final String DATABASE_NAME = "BookCastleDB";
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 7;
 
     // Table Names
     private static final String TABLE_USERS = "users";
@@ -345,7 +345,12 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
             user.setUsername(cursor.getString(cursor.getColumnIndex(KEY_USER_NAME)));
             user.setEmail(cursor.getString(cursor.getColumnIndex(KEY_USER_EMAIL)));
             user.setGender(cursor.getString(cursor.getColumnIndex(KEY_USER_GENDER)));
-            user.setDailyReadingGoal(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_USER_DAILY_READING_GOAL))));
+            //verify if the user has a daily goal else set it to 0
+            if(cursor.getString(cursor.getColumnIndex(KEY_USER_DAILY_READING_GOAL)) != null){
+                user.setDailyReadingGoal(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_USER_DAILY_READING_GOAL))));
+            }else{
+                user.setDailyReadingGoal(0);
+            }
             return user;
         }
         return null;
@@ -380,6 +385,22 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
             db.setTransactionSuccessful();
         } catch (Exception e) {
             Log.d(TAG, "Error while trying to update reading goal");
+        } finally {
+            db.endTransaction();
+        }
+    }
+
+    public void updateUser(int id, String username, String email) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();
+        try {
+            ContentValues values = new ContentValues();
+            values.put(KEY_USER_NAME, username);
+            values.put(KEY_USER_EMAIL, email);
+            db.update(TABLE_USERS, values, KEY_USER_ID + " = ?", new String[]{String.valueOf(id)});
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.d(TAG, "Error while trying to update user");
         } finally {
             db.endTransaction();
         }

@@ -1,8 +1,6 @@
 package com.android.bookcastle;
 
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -15,37 +13,31 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.StrictMode;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.bookcastle.api.ApiClient;
 import com.android.bookcastle.databinding.ActivityMainBinding;
 import com.android.bookcastle.factories.BookFactory;
 import com.android.bookcastle.fragments.BookmarkFragment;
-import com.android.bookcastle.fragments.ExploreFragment;
 import com.android.bookcastle.fragments.HomeFragment;
 import com.android.bookcastle.fragments.SettingsFragment;
 import com.android.bookcastle.models.Book;
 import com.android.bookcastle.models.Category;
 import com.android.bookcastle.models.User;
-import com.android.bookcastle.utils.Common;
 import com.android.bookcastle.utils.ECategories;
 import com.android.bookcastle.utils.NetworkChangeListener;
 import com.android.bookcastle.utils.UserDatabaseHelper;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -88,9 +80,6 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.nav_home:
                     replaceFragment(new HomeFragment());
-                    break;
-                case R.id.nav_explore:
-                    replaceFragment(new ExploreFragment());
                     break;
                 case R.id.nav_saved:
                     replaceFragment(new BookmarkFragment());
@@ -137,7 +126,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void displayUserProfile() {
-        //get user_id from shared preferences
         SharedPreferences sharedPreferences = getSharedPreferences("login", MODE_PRIVATE);
         String user_id = sharedPreferences.getString("user_id", "");
         User loggedUser = DB.getUserById(user_id);
@@ -147,13 +135,20 @@ public class MainActivity extends AppCompatActivity {
         View view = inflater.inflate(R.layout.layout_bottom_sheet, null);
         TextView username2 = view.findViewById(R.id.username);
         TextView usermail = view.findViewById(R.id.usermail);
+        ImageView userImage = view.findViewById(R.id.user_profile);
+        if(loggedUser.getGender().equals("male")){
+            userImage.setImageResource(R.drawable.pp);
+        }
+        else{
+            userImage.setImageResource(R.drawable.ppf);
+        }
         LinearProgressIndicator progressindicator = view.findViewById(R.id.progress_bar);
         TextView progress = view.findViewById(R.id.progress_text);
         Button settings_btn = view.findViewById(R.id.settings_btn);
         username2.setText(loggedUser.getUsername().substring(0, 1).toUpperCase() + loggedUser.getUsername().substring(1));
         usermail.setText(loggedUser.getEmail());
-       //progressindicator.setProgress(loggedUser.getDailyReadingGoal());
-        //progress.setText("You have read " + loggedUser.getDailyReadingGoal() + "mn today");
+       progressindicator.setProgress(loggedUser.getDailyReadingGoal());
+        progress.setText("You have read " + loggedUser.getDailyReadingGoal() + " min today");
 
         builder.setView(view);
         AlertDialog dialog = builder.show();

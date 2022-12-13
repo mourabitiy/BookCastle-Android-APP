@@ -71,9 +71,8 @@ public class BookDetailActivity extends AppCompatActivity {
         book_rating.setRating((float) book.getRating());
 
         if(book.getDownload_url() == null){
-            //disable download button
             btn_download.setEnabled(false);
-Drawable drawable = btn_download.getBackground();
+            Drawable drawable = btn_download.getBackground();
             drawable = DrawableCompat.wrap(drawable);
             DrawableCompat.setTint(drawable, ContextCompat.getColor(this, R.color.df_transparent_black_background));
             btn_download.setBackground(drawable);
@@ -167,7 +166,6 @@ Drawable drawable = btn_download.getBackground();
         startActivity(intent1);
     }
 
-    //Saving book to database
     private void saveBookToDatabase() {
         if(isFav){
             DB.removeBook(book.getId());
@@ -176,9 +174,7 @@ Drawable drawable = btn_download.getBackground();
             drawable = DrawableCompat.wrap(drawable);
             DrawableCompat.setTint(drawable, ContextCompat.getColor(this, R.color.fav_icon_tint));
             Snackbar.make(btn_fav, "Removed from favorites", Snackbar.LENGTH_SHORT).show();
-            bookmarkFragment.onResume();
-
-
+           // bookmarkFragment.onResume();
         }
         else{
             DB.addBook(book);

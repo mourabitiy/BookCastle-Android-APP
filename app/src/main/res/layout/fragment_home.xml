@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,8 +8,7 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+        android:layout_height="match_parent">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -83,8 +83,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:weightSum="100"
-                android:layout_marginBottom="20dp"
-                app:layout_constraintBottom_toTopOf="@+id/tabLayout"
+                app:layout_constraintBottom_toTopOf="@+id/guideline6"
                 app:layout_constraintTop_toTopOf="@+id/guideline2"
                 tools:layout_editor_absoluteX="20dp">
 
@@ -93,86 +92,86 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="10dp"
-                    android:layout_weight="100"
                     android:layout_marginTop="20dp"
+                    android:layout_weight="100"
                     android:background="@drawable/gray_rounded_shape"
+                    android:focusedByDefault="false"
                     android:fontFamily="@font/nexa_regular"
                     android:hint="@string/search"
-                    android:textColorHint="#9ea1b0"
                     android:iconifiedByDefault="false"
-                    android:focusedByDefault="false"
-                    tools:ignore="TouchTargetSizeCheck"
-                    />
+                    android:textColorHint="#9ea1b0"
+                    tools:ignore="TouchTargetSizeCheck" />
             </LinearLayout>
 
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tabLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:background="@color/transparent"
-                android:clipToPadding="false"
-                android:paddingLeft="4dp"
-                android:paddingRight="4dp"
-                android:layout_marginTop="20dp"
-                app:layout_constraintBottom_toTopOf="@+id/guideline6"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/guideline6"
-                app:tabBackground="@drawable/tab_color_selector"
-                app:tabGravity="fill"
-                app:tabIndicatorColor="@color/breaker"
-                app:tabMinWidth="50dp"
-                app:tabMode="scrollable"
-                app:tabSelectedTextColor="#000000"
-                app:tabTextColor="#9ea1b0">
+<!--            <com.google.android.material.tabs.TabLayout-->
+                <!--Gotta add this category filter later-->
+<!--                android:id="@+id/tabLayout"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center_horizontal"-->
+<!--                android:background="@color/transparent"-->
+<!--                android:clipToPadding="false"-->
+<!--                android:paddingLeft="4dp"-->
+<!--                android:paddingRight="4dp"-->
+<!--                android:layout_marginTop="20dp"-->
+<!--                app:layout_constraintBottom_toTopOf="@+id/guideline6"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="@+id/guideline6"-->
+<!--                app:tabBackground="@drawable/tab_color_selector"-->
+<!--                app:tabGravity="fill"-->
+<!--                app:tabIndicatorColor="@color/breaker"-->
+<!--                app:tabMinWidth="50dp"-->
+<!--                app:tabMode="scrollable"-->
+<!--                app:tabSelectedTextColor="#000000"-->
+<!--                app:tabTextColor="#9ea1b0">-->
 
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/popular" />
+<!--                <com.google.android.material.tabs.TabItem-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="@string/popular" />-->
 
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/gray_rounded_shape"
-                    android:text="@string/education" />
+<!--                <com.google.android.material.tabs.TabItem-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:background="@drawable/gray_rounded_shape"-->
+<!--                    android:text="@string/education" />-->
 
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/science" />
+<!--                <com.google.android.material.tabs.TabItem-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="@string/science" />-->
 
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/gray_rounded_shape"
-                    android:text="@string/psychology" />
+<!--                <com.google.android.material.tabs.TabItem-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:background="@drawable/gray_rounded_shape"-->
+<!--                    android:text="@string/psychology" />-->
 
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/romance" />
+<!--                <com.google.android.material.tabs.TabItem-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="@string/romance" />-->
 
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/crime" />
+<!--                <com.google.android.material.tabs.TabItem-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="@string/crime" />-->
 
-            </com.google.android.material.tabs.TabLayout>
+<!--            </com.google.android.material.tabs.TabLayout>-->
 
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/parent_rv"
+                android:paddingTop="50dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tabLayout"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
                 app:layout_constraintVertical_bias="1.0"
+                app:spanCount="2"
                 tools:layout_editor_absoluteX="5dp"
-                android:layout_marginTop="30dp"
-                tools:listitem="@layout/child_rv_layout"
-                app:spanCount="2"/>
+                tools:listitem="@layout/child_rv_layout" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline3"

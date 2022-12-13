@@ -27,6 +27,8 @@ import com.android.bookcastle.R;
 import com.android.bookcastle.adapters.CategoryAdapter;
 import com.android.bookcastle.models.Book;
 import com.android.bookcastle.models.Category;
+import com.android.bookcastle.models.User;
+import com.android.bookcastle.utils.UserDatabaseHelper;
 
 import java.util.ArrayList;
 
@@ -40,6 +42,7 @@ public class HomeFragment extends Fragment {
     ImageView user_profile;
     String username;
     SearchView search;
+    UserDatabaseHelper DB;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -80,18 +83,23 @@ public class HomeFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        //get the shared preferences
+        DB = UserDatabaseHelper.getInstance(getContext());
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("login", MODE_PRIVATE);
-        this.username = sharedPreferences.getString("username", "");
-        if(sharedPreferences.getString("gender","") == "female"){
-            user_profile.setImageResource(R.drawable.ppf);
-        }
+        String user_id = sharedPreferences.getString("user_id", "");
+        User user = DB.getUserById(sharedPreferences.getString("user_id", ""));
 
-        username = username.substring(0, 1).toUpperCase() + username.substring(1);
+        username = user.getUsername().substring(0, 1).toUpperCase() + user.getUsername().substring(1);
         welcome_msg = view.findViewById(R.id.welcome_msg);
         welcome_msg.setText("Welcome back, " + username);
         recyclerView = getView().findViewById(R.id.parent_rv);
         user_profile = getView().findViewById(R.id.user_profile);
+        if(user.getGender().equals("male")){
+            user_profile.setImageResource(R.drawable.pp);
+        }
+        else{
+            user_profile.setImageResource(R.drawable.ppf);
+        }
+
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         categories = ((MainActivity) getActivity()).getCategories();

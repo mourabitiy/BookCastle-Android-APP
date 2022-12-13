@@ -112,12 +112,12 @@
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
         android:fontFamily="@font/poppins"
         android:text="@string/gender"
-        android:layout_marginTop="9dp"
         android:textColor="@color/bg_dark"
-        android:textSize="18dp"
-        android:layout_marginStart="10dp"
+        android:textSize="15sp"
         app:layout_constraintStart_toStartOf="@+id/password_confirm"
         app:layout_constraintTop_toBottomOf="@+id/password_confirm" />
 

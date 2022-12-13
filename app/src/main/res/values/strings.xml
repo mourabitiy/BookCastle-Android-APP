@@ -35,7 +35,7 @@
     <string name="you_have_read_0_pages_today">You have read 20 minutes today</string>
     <string name="favourite_books">Favorite Books</string>
     <string name="you_have_0_favourite_books">You have 5 Favorite Books</string>
-    <string name="help">Need help? contact us.</string>
+    <string name="help">Need help? <b>contact us.</b></string>
     <string name="settings_2">Settings</string>
     <string name="download">Download</string>
     <string name="read_now">Read Now</string>
@@ -58,4 +58,7 @@
     <string name="your_new_password">Your new password</string>
     <string name="your_current_password">Your current password</string>
     <string name="change_password">Change Password</string>
+    <string name="edit_your_profile_informations">Edit your profile informations</string>
+    <string name="update_informations">Update Informations</string>
+    <string name="there_are_no_saved_books">There are no saved books</string>
 </resources>

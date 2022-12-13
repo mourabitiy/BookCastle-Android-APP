@@ -123,7 +123,13 @@ public class ApiClient {
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject bookObject = jsonArray.getJSONObject(i);
                 JSONObject formats = bookObject.getJSONObject("formats");
-                String url = formats.getString("text/plain; charset=utf-8");
+                String url="";
+                if(formats.getString("text/plain; charset=us-ascii") != null){
+                    url = formats.getString("text/plain; charset=us-ascii");
+                }else if(formats.getString("text/plain; charset=utf-8") != null){
+                    url = formats.getString("text/plain; charset=utf-8");
+                }
+
                 content = getContentFromUrl(url);
             }
         } catch (JSONException e) {

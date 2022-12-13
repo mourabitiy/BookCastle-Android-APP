@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,11 +18,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.bookcastle.ChangePassActivity;
+import com.android.bookcastle.EditProfileActivity;
 import com.android.bookcastle.GetstartedActivity;
 import com.android.bookcastle.MainActivity;
 import com.android.bookcastle.R;
 import com.android.bookcastle.models.User;
 import com.android.bookcastle.utils.UserDatabaseHelper;
+import com.mikhaellopez.circularimageview.CircularImageView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,25 +41,16 @@ public class SettingsFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    TextView change_password, tvName, tvEmail;
+    TextView change_password,edit_profile, tvName, tvEmail;
     ImageView back_btn2;
     UserDatabaseHelper DB;
     LinearLayout favorites;
     Button logout_btn;
+    CircularImageView profile_image;
 
     public SettingsFragment() {
-        // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SettingsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static SettingsFragment newInstance(String param1, String param2) {
         SettingsFragment fragment = new SettingsFragment();
         Bundle args = new Bundle();
@@ -85,6 +79,8 @@ public class SettingsFragment extends Fragment {
         tvName = view.findViewById(R.id.tvName);
         tvEmail = view.findViewById(R.id.tvEmail);
         back_btn2 = view.findViewById(R.id.back_btn2);
+        profile_image = view.findViewById(R.id.profile_pic);
+        edit_profile = view.findViewById(R.id.edit_profile);
         back_btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,7 +114,6 @@ public class SettingsFragment extends Fragment {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.clear();
                 editor.apply();
-                //load login activity
                 Intent intent = new Intent(getContext(), GetstartedActivity.class);
             }
         });
@@ -129,8 +124,24 @@ public class SettingsFragment extends Fragment {
         if (user != null) {
             tvName.setText(user.getUsername());
             tvEmail.setText(user.getEmail());
+            Log.d("GENDER", user.getGender());
+            if(user.getGender().equals("male")){
+                profile_image.setImageResource(R.drawable.pp);
+            }
+            else{
+                profile_image.setImageResource(R.drawable.ppf);
+            }
         }
-
+        User finalUser = user;
+        edit_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //open new activity to edit profile
+                Intent intent = new Intent(getContext(), EditProfileActivity.class);
+                intent.putExtra("user", finalUser);
+                startActivity(intent);
+            }
+        });
 
         return view;
 
