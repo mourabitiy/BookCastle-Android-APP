@@ -1,4 +1,3 @@
-[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)]https://github.com/mourabitiy/BookCastle-Android-APP)
 
 # BookCastle - Android App
 
