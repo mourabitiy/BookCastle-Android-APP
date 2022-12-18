@@ -1,5 +1,6 @@
-# BookCastle Android App
-A comprehensive collection of eBooks for Android.
+<p align="center"><a href="https://github.com/mourabitiy/BookCastle-Android-APP"><img src="https://user-images.githubusercontent.com/65322052/208295606-45d534e5-7808-4efc-8acf-38e84fa3d880.PNG" alt="Gray shape shifter" height="60"/></a></p>
+<h1 align="center">BookCastle</h1>
+<p align="center">An incredible list of books in your pocket</p>
 
 ![BookCastle App Screenshot](/banner.jpg)
 
