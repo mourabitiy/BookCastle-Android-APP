@@ -1,4 +1,4 @@
-#BookCastle Android App
+# BookCastle Android App
 A comprehensive collection of eBooks for Android.
 
 ![BookCastle App Screenshot](/banner.jpg)
